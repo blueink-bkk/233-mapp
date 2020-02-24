@@ -1,0 +1,78 @@
+<template name="modal1">
+  <div id="myModal" class="modal"
+    style="color:black;">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close js-quit">&times;</span>
+<!--
+      <form id="form1">
+        <textarea name="entry" style="width:100%; height:100pt;" tabindex="1" autofocus></textarea>
+        <br>
+        <input type="submit"  tabindex="2"/>
+      </form>
+-->
+
+      <div style="font-size:12pt; line-height:25pt; text-align:left;">
+        <h3>{{__ 'search-selections'}}</h3>
+        {{__ 'actual-search'}}
+        {{#each col in search_columns}}
+        <span  title="enlever cette colonne"
+        style="white-space:nowrap;
+        padding:1px 5px; border:1px solid lightgreen;
+        border-radius:4px;
+                margin-left:10pt;">
+          <span class="js-remove-col" htag="{{col.tag}}">&times;</span>
+          {{__ col.label}}
+        </span>
+        {{/each}}
+
+        <div class="modal-alert modal-alert-animation">
+          ALERT MISSING
+      {{!--
+          {{appx 'alert'}}
+          --}}
+        </div>
+
+        {{#if unused_columns}}
+        {{__ 'add'}} :
+        {{#each col in unused_columns}}
+        <span  title="ajouter cette colonne"
+          class="js-add-column"
+          htag="{{col.tag}}"
+        style="white-space:nowrap;
+        padding:1px 5px; border:1px solid lightgreen;
+        border-radius:4px;
+                margin-left:10pt;">
+          {{__ col.label}}
+        </span>
+        {{/each}}
+
+        <span  title="{{__ 'all-columns'}}"
+          class="js-add-all"
+          htag="all-cols"
+        style="white-space:nowrap;
+        padding:1px 5px; border:1px solid lightgreen;
+        border-radius:4px;
+                margin-left:10pt;">
+          {{__ 'all-columns'}}
+        </span>
+
+
+        {{/if}}
+
+      </div>
+
+      <div style="font-size:12pt; line-height:25pt; text-align:left;">
+        <h3>{{__ 'general-index'}}</h3>
+        <input type="button" class="js-chrono" value="{{__ 'by-date'}}">
+        <input type="button" class="js-authors" value="{{__ 'manufacturers-index'}}">
+        <!--
+        <input type="button" class="js-marques" value="Index des marques">
+      -->
+      </div>
+
+    </div>
+
+  </div>
+</template>

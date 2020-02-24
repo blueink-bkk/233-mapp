@@ -1,0 +1,21 @@
+<head>
+  <style>
+    #jj-intro {
+      color:brown;
+      background-color: rgb(245,245,245);
+      text-align: center;
+      margin: 10px 0px 0px 0px;
+      padding: 10px;
+      font-family:galdeano;
+    }
+    #jj-intro h1 {
+      font-size:2em;
+    }
+    #jj-intro h2 {
+      font-size:1.5em;
+    }
+    #jj-intro h3 {
+      font-family:arial;
+    }
+  </style>
+</head>

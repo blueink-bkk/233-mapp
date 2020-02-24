@@ -1,0 +1,64 @@
+<head>
+  <style>
+    .red {color:red;}
+    .green {color:green;}
+    #index-marques span.yp {
+      font-family: helvetica;
+      font-size:9pt;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<template name="index-marques">
+<div id="index-marques">
+
+  <div style="border:0px solid black; margin:5px; padding:2px;">
+    status:{{q.get}}
+    <input type="text" id="find-auteurs-input" style="height:20px; width:100%;">
+  </div>
+  {{#each it in marques}}
+  <div>
+    <div style="margin:5px 0 0 0; border-bottom:3px solid rgb(230,230,230);padding:0 0 10px 0;font-family:times;">
+      <b>Marque :</b><br>
+      <a href="/auteur/{{au.auteurName}}">{{{it.marque}}}</a><br>
+      <div style="margin:5px 0 0 20px;">
+        <b>Cité dans le(s) document(s) suivant(s)</b>
+        {{#each title in it.titres}}
+          <div style="margin:4px 0 0 0px;">
+            <span class="yp">({{title.yp}})</span> {{title.title}}
+            <span style="font-size:9pt;">[{{title.xid}}]
+              {{#if title.restricted}}
+              <span class="red">Restricted</span>{{/if}}
+              {{#if title.transcription}}
+              <span class="green">Transcription</span>{{/if}}
+            </span>
+
+
+
+            {{#if title.restricted}}
+            <div style="margin:0 0 0 0px;" class="red">
+              &rarr; Document  sous droits d'auteur, non communicable.
+            </div>
+            {{else}}
+            <div style="margin:0 0 0 0px;">
+              {{#each pdf in title.links}}
+              <div>
+                &rarr;
+                {{> href_pdf fn=pdf.fn fn2=pdf.fn2}}
+                (pdf)
+              </div>
+              {{/each}}
+            </div>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div style="display:table-cell;padding-left:10px;display:none;">
+      {{au.latest_auteur}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+</template>

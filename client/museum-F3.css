@@ -1,0 +1,234 @@
+@media screen and (min-width: 381px) {
+
+
+.af3 h1 {
+  font-size: 2em;
+  font-weight: bold;
+  line-height:20pt;
+}
+
+h2 {
+  font-size: 15pt;
+  font-weight: bold;
+  line-height:22pt;
+}
+
+._af3 h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height:16pt;
+}
+
+.af3 h3 {
+  font-size: 14pt;
+  line-height: 20pt;
+  margin:0 0 5px 0;
+  padding:0;
+}
+
+.af3 .brands {
+  margin-top:20px;
+}
+.narrow {
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+
+article.af3 {
+  text-align:center;
+  background-color: #eff5f8;
+  padding:20px 10px;
+  max-width:700px;
+}
+
+.af3 img {
+  _width: 100%;
+  max-height:600px;
+  max-width:100%;
+}
+
+.af3 section.data {
+  margin-bottom:30pt;
+  display:flex;
+  display: -webkit-flex; /* Safari */
+  -webkit-align-content: space-between; /* Safari */
+  align-content:         space-between;
+  -webkit-flex-wrap: nowrap; /* Safari */
+  flex-wrap:         nowrap;
+  flex-grow: 1;
+  flex-basis: 0;
+  justify-content:center;
+}
+
+.af3 .slidep {
+  __flex:none;
+  margin-top:70px;
+  min-width:100px;
+}
+
+.af3 .r-arrow,
+.af3 .l-arrow {
+  _width:100%; _height:100px;
+  __background-color:green;
+  font-size:35px;
+  color:rgb(212,212,212);
+  padding:0 10px; margin:0;
+}
+
+
+.af3 a.l-arrow:selected {color:rgb(230,230,230);}
+.af3 a.l-arrow:visited {color:rgb(230,230,230);}
+.af3 a.l-arrow:hover {color:rgb(180,180,180);}
+
+.af3 a.r-arrow:selected {color:rgb(230,230,230);}
+.af3 a.r-arrow:visited {color:rgb(230,230,230);}
+.af3 a.r-arrow:hover {color:rgb(180,180,180);}
+
+div.brands a {
+  font-size:11pt;
+}
+
+.af3 a {
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(100,100,100);
+}
+.af3 a.selected {color:green;}
+.af3 a:visited {color:black;}
+.af3 a:hover {color:green;}
+
+
+.af3 h1 {
+  font-size:19pt;
+  line-height:20pt;
+  font-weight:bold;
+  _color:brown;
+  color: rgba(156,71,50,0.98);
+  margin:20px 10px 2pt 10px;
+}
+
+.af3 h3 {
+  font-size:12pt;
+  line-height:18pt;
+  font-weight:normal;
+  margin:0; padding:0pt;
+}
+
+.af3 .h2 {
+  margin-bottom:10pt;
+}
+
+.af3 .__soc2:before {
+  __content:" Products : ";
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+
+
+.af3 p {
+  text-align:left;
+  font-size:11pt; line-height:14pt;
+}
+
+.af3 p.fr {
+  font-family: 'IM Fell DW Pica', serif;
+  text-align:left;
+  font-size:14pt; line-height:20pt;
+  margin: 5pt 30pt;
+}
+
+.af3 p.en {
+  font-family: 'Galdeano', sans-serif;
+  text-align:left;
+  font-size:13pt; line-height:18pt;
+  margin: 5pt 30pt;
+}
+
+.af3 p.cn {
+  text-align:left;
+  font-size:11pt; line-height:16pt;
+  margin: 5pt 30pt;
+}
+
+
+
+article.af3 .inb {display:inline-block;}
+article.af3 .pdf-logo1 {
+  width:30px;
+  margin-bottom:-10px;
+}
+article.af3 .pdf-data {
+  font-family: Oswald; font-weight:300; font-size:10pt;
+  __font-weight:light;
+}
+
+
+article.af3 .abox {
+  width: 400pt;
+  __background-color: lightyellow;
+  border: 1px dashed gray;
+  margin: 0 auto 0 auto;
+  font-family: Arial;
+  padding:20pt;
+}
+
+
+article.af3 a.g1:hover {
+  color: rgb(100,100,100);
+  _color:orange;
+  text-decoration: underline;
+}
+
+
+article.af3 .company {
+}
+
+article.af3 .pdf {
+}
+
+article.af3 div.pdf.inb {
+  margin:0 0 10pt 0;
+}
+.af3  h3.year {
+  __color:red;
+  font-family: 'Oswald';
+  font-weight:600;
+  margin: 5px 0 20px 0;
+}
+
+.af3 .year label {
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+
+
+.af3 mk {
+  margin:0 70pt;
+  line-height:14pt;
+  font-size:10pt;
+}
+
+.af3 .olabel {
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+
+
+.af3 .ci:before {
+  content:"City : ";
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+
+.af3 .__address:before {
+  content:"Address : ";
+  color: rgb(180,180,180);
+  font-family: 'Oswald';
+  font-weight:600;
+}
+}

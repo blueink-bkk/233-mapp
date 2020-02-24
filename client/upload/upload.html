@@ -1,0 +1,327 @@
+<head>
+  <style>
+    #upload .err-fn {
+      margin:0px; padding:2px 5px;
+      font-family: monospace;
+      background-color: lightgreen;
+    }
+
+    #upload pre {
+      margin:0px; padding:0px;
+      __font-family: monospace;
+    }
+
+    #upload .master-caution {
+      color:red;
+      font-weight: bold;
+    }
+
+    #upload .red {
+      color:red;
+      font-weight: bold;
+    }
+
+    #upload h5 {
+      margin:0; padding:2pt 4pt;
+      color:brown;
+      font-weight: bold;
+      font-size: 10pt;
+      text-align: center;
+    }
+
+
+    #upload h6 {
+      margin:0; padding:2pt 4pt;
+      color:brown;
+      font-weight: bold;
+      font-size: 8pt;
+    }
+
+
+    #upload .nodisplay {
+      display:none;
+    }
+
+    #upload .vtab  {
+      margin:5px; padding:5px;
+      background-color: rgb(240,240,240)
+    }
+
+    #upload .vtab p {
+      margin:2px 0 0 5px; padding:0 0 0 5px;
+      font-size:10pt;
+    }
+
+
+    #upload .prompt-alert {
+      color:red;
+      font-weight: bold;
+    }
+
+    #upload .err-code {
+      margin:0px; padding:0px 0px 0px 20px;
+      __font-family: monospace;
+    }
+
+    #upload input[type=button] {
+      padding: 8px;
+      border-width: 1px;
+      border-style: solid solid solid solid;
+      border-color: rgb(130,130,130);
+      font-weight: bold;
+    }
+
+    #upload input[type=button].btn-print {
+      margin: 0 0 0 0px;
+      padding: 0px 6px;
+      border-width: 1px;
+      border-style: solid solid solid solid;
+      border-color: rgb(130,130,130);
+      font-weight: bold;
+    }
+
+
+  #upload thead td {
+    cursor: pointer;
+    border-bottom: 2px solid rgb(230,230,230);
+    padding: 0 8px;
+    text-align:center;
+    line-height:18pt;
+  }
+
+  #upload .active-up,
+  #upload .active-down {
+    border-bottom: 2px solid brown;
+  }
+
+  </style>
+</head>
+<template name="upload">
+  <div id="upload">
+    <h1>Upload files</h1>
+    <div class="js-prompt" style="margin:20pt;">
+        {{state 'prompt'}}
+    </div>
+
+    <div style="margin:20px;">
+    <input type="file" class="js-select-directory" id="getfiles" style="display:none;" name="upload-directory" webkitdirectory directory multiple="true"/>
+    <input type="button" class="js-select" value="Select a folder" onclick="document.getElementById('getfiles').click()"/>
+    {{!--
+      <input type='button' class="js-validate" value='Validation' />
+      --}}
+    <input type='button' class="js-upload" value='Upload' />
+    <input type='button' class="js-rsync" value='RSYNC' />
+    <input type='button' class="js-cancel" value='Cancel' />
+    {{> upload_reset_button}}
+    </div>
+
+    {{!--
+    <form ref='uploadForm'
+      id='uploadForm'
+      __action='http://localhost:8000/upload2'
+      method='post'
+      encType="multipart/form-data">
+    </form> --}}
+
+    <div style="margin:20px;">
+      <div class="pre-flight vtab js-preflight nodisplay" style="margin:20px;">
+        <h6>PRE-FLIGHT</h6>
+        <table>
+          <tr>
+            <td style="text-align:right;">remote files: </td>
+            <td>{{state 'nfiles-server'}}</td>
+            <td>
+              &rarr;&ensp;server directory: <input type="button" class="btn-print js-print js-print5" title="show server directory" value="show">
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align:right;">local files : </td>
+            <td>{{state 'nfiles-local'}}</td>
+            <td>
+              &rarr;&ensp;local directory: <input type="button" class="btn-print js-print js-print6" title="show local directory" value="show">
+            </td>
+          </tr>
+
+          {{#if state 'v1-count'}}
+          <tr>
+            <td style="text-align:right;">local files rejected : </td>
+            <td>{{state 'v1-count'}}</td>
+            <td>
+              &rarr;&ensp;<input type="button" class="btn-print js-print js-print1" value="show">
+            </td>
+          </tr>
+          {{/if}}
+
+          <tr>
+            <td style="text-align:right;">files to upload : </td>
+            <td>{{state 'nfiles-batch'}}</td>
+            <td>
+              &rarr;&ensp;<input type="button" class="btn-print js-print js-print7" value="show">
+            </td>
+          </tr>
+
+          <p>
+            local files rejected : {{state 'nfiles-errors'}}
+            &rarr;&ensp;<input type="button" class="btn-print js-print js-print1" value="show">
+          </p>
+
+
+        </table>
+
+        {{!--
+        {{#if state 'v2-count'}}
+        <p>
+          file names not conforming to www-standards : {{state 'v2-count'}}
+          &rarr;&ensp;<input type="button" class="btn-print js-print js-print2" value="show">
+        </p>
+        {{/if}}
+
+        {{#if state 'v3-count'}}
+        <p class="red">
+          file names in collision with server: {{state 'v3-count'}}
+          &rarr;&ensp;<input type="button" class="btn-print js-print js-print3" value="show">
+        </p>
+        {{/if}}
+        --}}
+
+
+
+      </div>
+
+      <div class="vtab js-vtab-upload nodisplay">
+        <h6>UPLOAD</h6>
+        <p>files uploaded : {{state 'upload-count'}}</p>
+        <p>up-to-date on server : {{state 'uptodate-count'}}</p>
+        <p>alerts : {{state 'alert-count'}}</p>
+      </div>
+
+      <div class="vtab js-vtab-confirm nodisplay">
+        <h6>ALERT</h6>
+        <p>{{state 'preflight-errors-count'}} files will not be uploaded.
+          &rarr;&ensp;<input type="button" class="btn-print js-print js-print4" value="show">
+        </p>
+        <p>
+          &rarr;&ensp;
+          <input type="button" class="btn-print js-confirm-upload" value="Continue anyway...">
+        </p>
+      </div>
+
+      <div class="vtab js-vtab-rsync nodisplay">
+        <h6>RSYNC</h6>
+        {{#if state 'nv-count'}}
+        <p>
+          ALERT: {{state 'nv-count'}} files will be removed from server
+        </p>
+        {{!--
+          <input class="js-rsync" type="checkbox" > Continue anyway.
+        --}}
+        {{else}}
+        <p>No files to remove from the server.</p>
+        {{/if}}
+      </div>
+    </div>
+
+    {{#if err_list}}
+      <div style="margin:20px;padding:10px; background-color:rgb(230,230,230);">
+        {{#each file in err_list}}
+        <pre><span class="err-fn brown">{{file.name}}</span></pre>
+        {{#each err in file.com}}
+          <div class="err-code">-- <code>{{err}}</code></div>
+        {{/each}}
+        <div class="err-code">
+          --
+          {{#each flag in file.flags_}}
+            <span class="err-code-"><code>[{{flag}}]</code></span>
+          {{/each}}
+        </div>
+        {{/each}}
+      </div>
+    {{/if}}
+
+
+    {{!--
+      {{#if server_directory.get}}
+      <div class="" style="margin:20px;padding:10px; background-color:rgb(230,230,230);">
+        <table style="font-family:monospace;">
+          <thead style="padding:0 0 5px 0;">
+            <tr style="color:brown;border:1px solid brown; background-color:rgb(220,220,220); font-weight:bold;border-bottom:solid 2px brown;">
+              <td><input type="button" class="js-table js-table-fname" value="file-name"></td>
+              <td style="text-align:right">&emsp;<input type="button" class="js-table js-table-size" value="size">&emsp;</td>
+              <td><input type="button" class="js-table js-table-lastModified" value="last-modified"></td>
+            </tr>
+          </thead>
+          <tr style="height:5px;"></tr>
+          {{#each file in server_directory.get}}
+          <div style="display:table-row">
+            <code style="display:table-cell;">{{file.name}}</code>
+            <code style="display:table-cell;text-align:right;">&emsp;{{file.size}}&emsp;</code>
+            <code style="display:table-cell">{{file.lastModified}}</code>
+          </div>
+          {{/each}}
+        </table>
+      </div>
+      {{/if}}
+    --}}
+
+
+    {{#if server_directory.get}}
+    <div class="server-directory" style="margin:20px;padding:10px; background-color:rgb(230,230,230);">
+      <table style="font-family:monospace;">
+        <caption>
+          <h5 style="border:2px solid rgb(250,250,250);">Remote Directory</h5>
+        </caption>
+        <thead style="padding:0 0 5px 0;">
+          <tr style="color:brown;border:1px solid brown; background-color:rgb(220,220,220); font-weight:bold;border-bottom:solid 2px brown;">
+            <td class="js-table js-table-fname">file-name</td>
+            <td class="js-table js-table-size" style="text-align:right">&emsp;size &emsp;</td>
+            <td class="js-table js-table-lastModified">last-modified</td>
+          </tr>
+        </thead>
+        <tr style="height:5px;"></tr>
+        {{#each file in server_directory.get}}
+        <div style="display:table-row">
+          <code style="display:table-cell;">{{file.name}}</code>
+          <code style="display:table-cell;text-align:right;">&emsp;{{file.size}}&emsp;&emsp;</code>
+          <code style="display:table-cell">&emsp;{{localTime file.lastModified}}</code>
+        </div>
+        {{/each}}
+      </table>
+    </div>
+    {{/if}}
+
+    {{#if local_directory.get}}
+    <div class="directory" style="margin:20px;padding:10px; background-color:rgb(230,230,230);">
+      <table style="font-family:monospace;">
+        <caption>
+          <h5 style="border:2px solid rgb(250,250,250);">Local Directory</h5>
+        </caption>
+        <thead style="padding:0 0 5px 0;">
+          <tr style="color:brown;border:1px solid brown; background-color:rgb(220,220,220); font-weight:bold;border-bottom:solid 2px brown;">
+            <td class="js-local-directory js-local-fname">file-name</td>
+            <td class="js-local-directory js-local-size" style="text-align:right">&emsp;size &emsp;</td>
+            <td class="js-local-directory js-local-lastModified">last-modified</td>
+          </tr>
+        </thead>
+        <tr style="height:5px;"></tr>
+        {{#each file in local_directory.get}}
+        <div style="display:table-row">
+          <code style="display:table-cell;">{{file.name}}</code>
+          <code style="display:table-cell;text-align:right;">&emsp;{{file.size}}&emsp;&emsp;</code>
+          <code style="display:table-cell">&emsp;{{file.lastModifiedDate}}</code>
+        </div>
+        {{/each}}
+      </table>
+    </div>
+    {{/if}}
+
+
+  </div>
+</template>
+
+
+<template name="upload_reset_button">
+  <div style="display:inline-block;">
+    <input type='button' class="js-cancel" value={{caption}} />
+  </div>
+</template>

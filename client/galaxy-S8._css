@@ -1,0 +1,125 @@
+/* CSS declarations go here */
+
+@media screen and (min-width: 140px) and (max-width: 380px) {
+
+html {
+  background-color: rgb(120,120,120);
+}
+
+h1 {
+  font-size: 20pt;
+  line-height: 24pt;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  border: 0px solid rgb(200,240,200);
+  _height:100vh;
+  margin:0px;
+  box-sizing: border-box;
+  padding:0px;
+  min-height:700px;
+  text-align:center;
+}
+
+.index-layout {
+  box-sizing: border-box;
+  position: relative; top:0px;
+  _height:100vh; _width:100%;
+  background-color: #eff5f8;
+  margin-left: auto; margin-right:auto;
+  border:1px dashed blue;
+  text-align:left;
+  _padding:10px;
+}
+
+.cc-index {
+}
+
+
+.display-none {
+  display:none;
+}
+
+.visibility-hidden {
+  visibility:hidden;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+  text-decoration: none;
+}
+a b {
+  color:rgb(170,100,100);
+}
+
+.cc-index-entry {
+		margin: 5px 0px 5px 0px;
+	}
+
+.subIndex-panel {
+  padding: 0 0 0 20pt;
+}
+
+p.short-entry {
+	text-indent:-20pt;
+	margin:0pt;
+	line-height:12pt;
+	margin-top:5pt;
+}
+
+
+.cc-typeahead {
+	width:100%; padding: 8px 12px; line-height:30px;
+	font-size:14px; font-family:Arial;
+	border:2px solid #CCC; border-radius:8px;
+	outline:none;
+	background-color: transparent;
+  margin-bottom:0px;
+}
+.cc-typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+div#search-input {
+	__visibility: hidden;
+}
+
+.jj-intro {
+  _width:100%;
+  text-align:center;
+  margin: 0px auto 0px auto;
+  padding: 10pt;
+  border: 1px dashed green;
+}
+
+
+.cc2-abox {
+  box-sizing: border-box;
+  _position:absolute;
+  _top:50px;
+  _width:100%;
+  max-height:calc(100% - 100px);
+  overflow-y: auto;
+  __width:calc(100% - 60px);
+  __margin-top:calc(30px);
+  __max-height:40px; _margin-top: -10px;
+  font-size:9pt;
+  _padding:4px;
+}
+
+.brown {color:brown;}
+
+
+.article-layout {
+  box-sizing: border-box;
+  position: relative; top:0px;
+  height:100vh; _width:700px;
+    __background-color: rgb(240,240,200);
+  background-color: #eff5f8;
+  margin-left: auto; margin-right:auto;
+  border:0px solid blue;
+  text-align:center;
+  padding:0px;
+  }
+}

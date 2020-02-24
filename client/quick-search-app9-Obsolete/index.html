@@ -1,0 +1,94 @@
+<template name="index">
+
+<div class="index-layout">
+	{{#if article_id}}
+		{{> article}}
+	{{else}}
+	<div class="cc2-abox">
+		<div class="cc-index">
+
+		{{#if show_intro}}
+			{{> jj_intro_fr}}
+		{{/if}}
+
+		{{#if bh_ready}}
+		<div id="search-input">
+			<p style="text-align:right; margin:0pt;">
+				{{#if subIndex_count}}
+				{{subIndex_count}} {{__ 'entries'}}
+				{{else}}
+				{{#if show_intro}}
+				{{else}}
+				Aucun résultat.
+				{{/if}}
+				{{/if}}
+			</p>
+
+			{{> date_range_slider this}}
+
+			<input type="text" class="cc-typeahead js-typeahead"
+				placeholder="{{__ 'search-made-on2' '4408' '2658'}}"
+				onfocus="this.placeholder = ''"
+				onblur="this.placeholder = 'Recherche dans 4408 articles et 2657 documents joints.'"
+			/>
+			<div style="margin:15px 0 0 0;
+					font-size:12pt; font-family:Lato; _font-style:italic;
+			     display:flex; justify-content: space-between;
+					 width:100%;
+					 _border:1px dashed red;">
+					 <div><i>
+						 {{__ 'search-made-on'}} :
+						 {{#each it in list_of_columns}}
+						 &ensp;
+						 <span style="white-space:nowrap;
+						 ">
+							 <b style="font-size:16pt; color:rgb(100,150,100);font-weight:bold;">&times;</b>
+							 <span style="white-space:nowrap;
+						 text-decoration:underline;
+						 text-decoration-color: rgb(180,180,180);
+						 "> {{__ it}}
+							</span>
+						</span>
+						 {{/each}}
+					 </i>
+					 <div style="display:inline-block;">
+					 [ <a href="#" id="js-changer">{{__ 'modify-search-params'}}</a> ]
+				 </div>
+				 </div>
+		<!--
+					 <div style="_display:inline-block;white-space: nowrap;">
+					[ <a href="#" id="js-changer">Modifier les paramètres de recherche</a> ]
+				</div>
+			-->
+			</div>
+			{{> cc_warnings}}
+		</div>
+		{{else}}
+			<div style="font-size:12pt; font-weight:bold; color:rgb(120,180,120);text-align:center">
+			Search engine is initializing - please wait.<br>
+			Expect to wait up to 20 seconds for a slow connection
+			</div>
+		{{/if}}
+
+
+		{{#if subIndex_count}}
+			{{> subIndex_panel}}
+			<hr>
+		{{/if}}
+
+
+		{{>jpc_address}}
+
+		</div>
+	</div>
+	{{/if}}
+</div>
+
+
+{{> modal1}}
+
+{{#if db_row}}
+	{{> article}}
+{{/if}}
+
+</template>

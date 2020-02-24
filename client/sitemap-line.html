@@ -1,0 +1,21 @@
+<template name="sitemap_line">
+  <div>
+  {{> href1 href="/" caption="welcome"}}
+  {{> href1 href="/quick-search" caption="quick-search"}}
+  {{> href1 href="/deep-search" caption="deep-search"}}
+  {{> href1 href="/index-auteurs" caption="auteurs"}}
+  {{> href1 href="/index-constructeurs" caption="constructeurs"}}
+  {{> href1 href="/index-marques" caption="marques"}}
+  {{> href1 href="/index-s3" caption="index-s3"}}
+  {{!--
+    {{> href1 href="/index-titres" caption="index-titres"}}
+    --}}
+
+  </div>
+</template>
+
+<template name="href1">
+  <div style="display:inline-block">
+  [ <a href="{{href}}">{{caption}}</a> ]
+  </div>
+</template>

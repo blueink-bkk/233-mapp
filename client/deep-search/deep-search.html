@@ -1,0 +1,182 @@
+<head>
+	<style>
+	  em {
+	    color:blue; font-weight: bold;
+	  }
+	  h3 {
+	    font-size: 11pt;
+	  }
+
+	.nodisplay {
+		display:none;
+	}
+	.hidden {
+		visibility:hidden;
+	}
+
+</style>
+</head>
+<template name="deep-search">
+
+<div id="deep-search" class="index-layout">
+	{{#if app_state 'article-id'}}
+		{{> article}}
+	{{else}}
+	<div class="cc2-abox">
+		<div class="cc-index">
+
+		{{#if show_intro}}
+			{{> jj_intro_fr}}
+			<p class="jj-intro" style="font-family:galdeano; font-size:15pt; font-style:italic; font-weight:normal; margin: 30pt 0 70px 0; color:rgb(66,66,66);">
+				{{{__ 'deep-search-is-done-by'}}}
+			</p>
+
+		{{/if}}
+
+		{{#if app_state 'pdfCount'}}
+		<div id="search-input">
+
+			<div class="top-infos" style="display:flex;margin-bottom:3px;">
+				<div class="js-clear-search-results" style="cursor:pointer;font-weight:bold;margin-right:10px;">[ CLEAR ]</div>
+				<div class="js-busy-flag hidden">SEARCHING...</div>
+				<div style="margin-left:auto">
+					{{#if subIndex_Count}}
+					<b style="color:brown;">DEEP-SEARCH</b> &mdash;
+					<span class="js-max_results_reached nodisplay" style="margin:0;padding:0;">{{__ 'over-500'}} </span>{{subIndex_Count.get}} {{__ 'entries'}}
+					{{else}}
+					{{#if show_intro}}
+					{{else}}
+					Aucun résultat.
+					{{/if}}
+					{{/if}}
+				</div>
+			</div>
+
+			{{!--
+				<p style="text-align:right; margin:0pt;">
+					{{#if subIndex_Count}}
+					<b style="color:brown;">DEEP-SEARCH</b> &mdash; {{subIndex_Count.get}} {{__ 'entries'}}
+					{{else}}
+					{{#if show_intro}}
+					{{else}}
+					Aucun résultat.
+					{{/if}}
+					{{/if}}
+				</p>
+			--}}
+
+			{{!--
+			{{> date_range_slider this}}
+			--}}
+
+			<input type="text" class="cc-typeahead js-deep-search"
+				placeholder="{{__ 'deep-search-on-pdf' pdfCount pdfpagesCount }}"
+				onfocus="this.placeholder = ''"
+				onblur="this.placeholder = '{{__ 'deep-search-on-pdf' pdfCount pdfpagesCount }}'"
+			/>
+			<div style="margin:15px 0 0 0;
+					font-size:12pt; font-family:Lato; _font-style:italic;
+			     display:flex; justify-content: space-between;
+					 width:100%;
+					 _border:1px dashed red;">
+					 <div>
+						 {{!--
+						 <i>
+						 {{__ 'deep-search-made-on'}} :
+						 {{#each it in list_of_columns}}
+						 &ensp;
+						 <span style="white-space:nowrap;
+						 ">
+							 <b style="font-size:16pt; color:rgb(100,150,100);font-weight:bold;">&times;</b>
+							 <span style="white-space:nowrap;
+						 text-decoration:underline;
+						 text-decoration-color: rgb(180,180,180);
+						 "> {{__ it}}
+							</span>
+						</span>
+						 {{/each}}
+					 </i>
+					 <div style="display:inline-block;">
+					 [ <a href="#" id="js-changer">{{__ 'modify-search-params'}}</a> ]
+				 </div>
+				 --}}
+				 </div>
+		<!--
+					 <div style="_display:inline-block;white-space: nowrap;">
+					[ <a href="#" id="js-changer">Modifier les paramètres de recherche</a> ]
+				</div>
+			-->
+			</div>
+			{{> cc_warnings}}
+		</div>
+		{{else}}
+			<div style="font-size:12pt; font-weight:bold; color:rgb(120,180,120);text-align:center">
+				{{{__ 'deep-search-engine-initializing'}}}
+				{{!--
+					Search engine is initializing - please wait.<br>
+					Expect to wait up to 20 seconds for a slow connection
+				--}}
+			</div>
+		{{/if}}
+
+
+		{{#if subIndex_Count}}
+		<div>
+				{{#each it in subIndex}}
+				{{#if modulo @index 5}}
+
+				<div style="border-bottom:1px solid darkgray; padding:5px;margin:5px;">
+					<img style="width:100%"
+					src="http://museum-assets.ultimheat.com/museum-pub/{{get_a_pub}}"
+					>
+				</div>
+
+				{{!--
+					<div style="border-bottom:1px solid darkgray; padding:5px;margin:5px;">
+					<div style="height:150px; background-color:lightgray; border:1px solid darkgray;text-align:center;line-height:140px;color:white;font-size:30pt;">
+						<b>
+							{{get_a_pub}}
+						</b>
+					</div>
+					</div>
+				--}}
+
+
+				{{/if}}
+				<div style="border-bottom:1px solid darkgray; padding-bottom:5px;margin:5px;">
+				<h3>
+					<a style="display:none" href="/pdf/?id={{it.url}}&page={{it.pageno}}">{{trimfn it.url}} (p. {{it.pageno}}) ::{{it.rank}}</a>
+					<a href='http://museum-assets.ultimheat.com/pdf-www/{{it.url}}#page={{it.pageno}}&view=FitH,top'
+						target="anotherTab"
+						title="Article"
+					>[{{it.rank}}] {{trimfn it.url}}</a>
+					<span class="pdf-page">
+					<a href='http://museum-assets.ultimheat.com/pdf-www/{{it.url}}#page={{it.pageno}}&view=FitH,top'
+						target="anotherTab"
+						title='PDF-FILE-{{it.article_id}}'
+					> #{{it.pageno}}</a>
+					</span>
+				</h3>
+				<p style="font-family:times; font-size:12pt; width:100%;">{{{split_newlines it.fragments}}}</p>
+				</div>
+				{{/each}}
+		</div>
+			<hr>
+		{{/if}}
+
+
+		{{>jpc_address}}
+
+		</div>
+	</div>
+	{{/if}}
+</div>
+
+
+{{> modal1}}
+
+{{#if db_row}}
+	{{> article}}
+{{/if}}
+
+</template>

@@ -1,0 +1,163 @@
+<template name="preview_panel">
+  <style>
+  a, a:visited, a:hover, a:active {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a.js-refa {
+    color: brown;
+    text-decoration: underline;
+  }
+
+  </style>
+
+
+  <article class="af3" style="_border: 1px dashed gray;">
+    <section class="data">
+      <!--
+      <div class="slidep left">
+        <a href="#" class="l-arrow js-prev-article">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+      </div>
+      -->
+      <div>
+        <div class="img">
+          {{#if it.data.pic}}
+          {{#if it.data.reserved}}
+          [image reserve]
+          {{else}}
+          <img src="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{it.data.pic}}.jpg"
+            style="max-height:500px;">
+          {{/if}}
+          {{/if}}
+        </div>
+
+          <h1 class="company inb">
+            {{it.data.h1}}
+          </h1>
+
+          {{#if it.data.h2}}
+          <h3 class="soc2">
+          {{it.data.h2}}
+          </h3>
+          {{/if}}
+
+          <h3 class="country fr">
+          </h3>
+
+          {{#if it.data.yp}}
+          <h3 class="year inb">
+            <label>{{__ 'yp'}} : </label>
+            {{it.data.yp}}
+            {{#if it.data.circa}}
+            circa
+            {{/if}}
+          </h3>
+          {{/if}}
+
+          {{#if it.data.ci}}
+          <h3 class="city">
+          <span class="olabel">{{__ 'city'}} :</span>
+          <span style="font-family: FontAwesome;">&#xf0ac;&nbsp;</span>
+            {{it.data.ci}}
+          </h3>
+          {{/if}}
+
+          {{#if it.data.sa}}
+          <h3 class="address">
+            {{it.data.sa}}
+          </h3>
+          {{/if}}
+
+          <h3 style="margin-top:5pt;">
+            {{#if it.data.aka}}
+              <span class="narrow">{{__ 'name-author'}}</span> : {{it.data.aka}}
+              {{#if it.data.yf}}
+                &emsp;<span class="narrow">{{__ 'year-founded'}} : </span>
+                {{it.data.yf}}
+              {{/if}}
+            {{else}}
+            {{#if it.data.yf}}
+              <span class="narrow">{{__ 'year-founded'}} : </span> {{it.data.yf}}
+            {{/if}}
+            {{/if}}
+          </h3>
+
+          {{#if it.data.mk}}
+          <div class="brands">
+            <i class="fa fa-tag btag"></i>
+            <span class="olabel">{{__ 'brands'}} :</span>
+            {{#each b in it.data.mk}}
+              <span class="mtag">&ndash;&nbsp;<a href="#">{{b}}</a></span>
+            {{/each}}
+
+          </div>
+          {{/if}}
+
+
+          <div>
+
+          </div>
+      </div>
+
+      <!--
+      <div class="slidep right">
+        <a href="#" class="r-arrow js-next-article">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    -->
+    </section>
+
+
+    {{#if isTranscription}}
+    <i>{{__ 'transcription'}}</i>
+    {{/if}}
+
+    {{#if it.data.fr}}
+    <hr>
+    <p class="fr">{{it.data.fr}}</p>
+    {{/if}}
+
+    {{#if it.data.en}}
+    <hr>
+    <p class="en">{{it.en}}</p>
+    {{/if}}
+
+    {{#if it.data.zh}}
+    <hr>
+    <p class="cn">{{it.data.zh}}</p>
+    {{/if}}
+
+    {{#if it.data.links}}
+    <hr>
+    {{#each pdf in it.data.links}}
+    <div class="pdf inb">
+      <img class="pdf-logo1" src="http://www.ultimheat.com/pdf_logo.jpg">
+      {{#if it.reserved}}
+      <a href="#" target='_blank'>
+        PDF <span class="pdf-data" style="font-weight:300;">{{pdf.com}} page(s) (Non communicable)</span>
+      </a>
+      {{else}}
+      <a href="http://museum-assets.ultimheat.com/pdf-www/{{pdf.fn}}.pdf" target='_blank'>
+        PDF <span class="pdf-data" style="font-weight:300;">{{part @index}}{{pdf.com}} page(s)</span>
+      </a>
+      {{/if}}
+    </div>
+    &emsp;
+    {{/each}}
+    {{/if}}
+    <hr>
+
+    {{!--
+    <div>
+      {{raw_data}}
+    </div>
+    --}}
+
+    </article>
+
+
+</template>

@@ -1,0 +1,108 @@
+<template name="subIndex_panel">
+	<div class="subIndex-panel">
+
+
+	{{#if full_version}}
+		{{#each it in subIndex}}
+		<div class="index-entry" year="{{it.yp}}"
+			style="padding:12pt;
+			border: 1px solid #53778c;
+			margin-bottom: 16px;
+			margin-bottom: 16px;
+			border-radius: 4px;
+			-webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.35);
+			-moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.35);
+			box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.35);
+	    ">
+
+			<div style="display:flex;">
+			<div style="flex-basis:auto; flex-grow:1; min-width:100px; max-width:180px;">
+				{{#unless it.reserved}}
+				{{#if it.pic}}
+				<a href="{{pathFor 'cc-article' id=it.id}}">
+					<img style="width:100%;"
+					src="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{it.pic}}.jpg">
+				</a>
+				{{/if}}
+				{{/unless}}
+			</div>
+			<div style="flex-basis:auto; flex-grow:1; text-align:center;">
+				<p style="margin:0;padding:0;">
+					<a class="js-article" href={{it.xid}} hhref="{{pathFor 'cc-article' id=it.id}}">
+						<b style="color:brown;">{{it.h1}}</b>
+					</a>
+				</p>
+				{{#if it.h2}}
+					<p style="margin:0;padding:0;"><i>{{it.h2}}</i></p>
+				{{/if}}
+
+				<p style="margin:0;padding:0;">
+					<b style="color:rgb(100,100,100);">{{it.yp}}</b>
+					{{#if it.ci}}
+						&mdash; {{it.ci}}
+						{{#if it.co}}
+							&roarr; {{it.co}}
+						{{/if}}
+					{{/if}}
+				</p>
+
+				{{#if it.mk}}
+				<p style="margin:0;padding:0 20pt; text-align:left;">
+					<span style="
+	color: rgb(150,150,150);
+	font-family: 'Oswald';
+	font-weight: 600;
+	font-size:7pt;">MARQUES:</span>
+					{{#each b in it.mk}}
+						<span style="display:inline-block">
+							<b style="color:rgb(150,150,150);">&ndash;</b>
+						 	{{b}}</span>
+					{{/each}}
+				</p>
+				{{/if}}
+
+			</div>
+		</div>
+
+
+		<p style="text-indent:-40pt; margin:0pt;">
+
+	</p>
+
+
+		<div class="fr"
+			style="padding:0pt 0pt 0pt 0pt; margin:0pt 0pt 0pt 0pt; font-size:10pt; font-family:times; line-height:12pt;">
+			<i>{{it.fr}}</i>
+		</div>
+		<div class="fr" style="padding:0pt 0pt 0pt 0pt; margin:0pt 0pt 0pt 0pt; font-size:10pt; font-family:times; line-height:12pt;">
+			{{it.en}}
+		</div>
+		<div class="fr" style="padding:0pt 0pt 0pt 0pt; margin:0pt 0pt 0pt 0pt; font-size:10pt; font-family:times; line-height:12pt;">
+			{{it.cn}}
+		</div>
+	</div>
+	{{/each}}
+
+
+	{{else}}
+	<!-- too many articles -->
+		{{#each it in subIndex}}
+		<p class="entry short-entry" year="{{it.yp}}">
+		&blacksquare;
+		<a class="js-article" href={{it.id}} hhref="{{pathFor 'cc-article' id=it.id}}">
+			<b style="color:rgb(100,100,100);">{{it.yp}}</b>
+			&emsp;
+			<b style="color:brown;">{{it.h1}}</b>
+		</a>
+		{{#if it.h2}}
+			&nbsp;:&ensp;{{it.h2}}
+		{{/if}}
+
+		{{#if it.ci}}
+			<span style="display:inline;">&nbsp;({{it.ci}})</span>
+		{{/if}}
+		</p>
+		{{/each}}
+	{{/if}}
+	</div>
+</template>
