@@ -4,9 +4,6 @@ module.exports = {
       // TODO: set host address, username, and authentication method
       host: 'ultimheat.com',
       username: 'dkz',
-      // pem: './path/to/pem'
-      // password: 'bangkok786'
-      // or neither for authenticate from ssh-agent
     }
   },
 
