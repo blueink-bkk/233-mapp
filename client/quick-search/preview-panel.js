@@ -11,7 +11,11 @@ Template.preview_panel.helpers({
   },
   isTranscription() {
     let _meta = app.state.get('meta')
-    return (_meta && (_meta.flag == 'T'));
+    console.log(`@14: helper meta:`,_meta)
+    const a1 = app.article.get();
+//    console.log(`@16: helper meta `,{a1})
+//    return (_meta && (_meta.flag == 'T'));
+    return (a1.data.transcription)
   },
   part(x) {
     if (x>0) {

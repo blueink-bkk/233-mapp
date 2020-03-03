@@ -3,10 +3,10 @@
 <div id="jj-intro" class="jj-intro" style="font-weight:100; font-size:12pt;">
     <div class="brown">
       <h1>{{__ 'ultimheat-museum'}}</h1>
-      <h1>{{{__ 'antique-heating-cooking-appliances'}}}</h1>
+      <h1>{{__ 'antique-heating-cooking-appliances'}}</h1>
       <br>
       <h2>{{__ 'manufacturers-catalog'}}</h2>
-      <h2>{{{__ 'books-articles-periodicals'}}}</h2>
+      <h2>{{__ 'books-articles-periodicals'}}</h2>
     </div>
 
 <br>

@@ -25,12 +25,8 @@
       <div>
         <div class="img">
           {{#if it.data.pic}}
-          {{#if it.data.reserved}}
-          [image reserve]
-          {{else}}
           <img src="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{it.data.pic}}.jpg"
             style="max-height:500px;">
-          {{/if}}
           {{/if}}
         </div>
 
@@ -141,7 +137,7 @@
         PDF <span class="pdf-data" style="font-weight:300;">{{pdf.com}} page(s) (Non communicable)</span>
       </a>
       {{else}}
-      <a href="http://museum-assets.ultimheat.com/pdf-www/{{pdf.fn}}.pdf" target='_blank'>
+      <a href="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{pdf.fn}}.pdf" target='_blank'>
         PDF <span class="pdf-data" style="font-weight:300;">{{part @index}}{{pdf.com}} page(s)</span>
       </a>
       {{/if}}

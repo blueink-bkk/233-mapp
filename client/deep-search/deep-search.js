@@ -24,6 +24,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import {app} from '../app-client.js';
 
+let vpath = 'museum.pdf'
+
 // ============================================================================
 
 const pub = [
@@ -100,7 +102,7 @@ TP.onCreated(function(){
   tp.deep_search = function(query) {
     tp.max_results_reached.classList.add('nodisplay')
     //    tp.execute_query(query);
-    Meteor.call('deep-search',{vpath:'museum.pdf', query}, (err,data)=>{
+    Meteor.call('deep-search',{vpath, query}, (err,data)=>{
       //tp.etime.set(new Date().getTime() - etime);
       if (err) {
         console.log(`ERROR Meteor.call(deep-search)
@@ -346,6 +348,9 @@ FlowRouter.route('/deep-search', {
         console.log(' --- params:',params);
 //        document.auteur = "Museum v9";
 //        app.article_id.set(undefined);
+        vpath = queryParams['path'] || 'museum.pdf'
+        Session.set('tvec-path',vpath)
+        console.log(`tvec_path:`,vpath)
         BlazeLayout.render('deep-search');
     }
 });

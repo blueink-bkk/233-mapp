@@ -144,16 +144,24 @@ TP.events({
     console.log(`current-article: ${app.state.get('article-id')} next is item_id:${item_id}`)
     app.state.set('article-id', item_id);
 
-    Meteor.call('get-itemx',{item_id, opCode:'latest'},(err,data)=>{
+    Meteor.call('get-itemx',{item_id, opCode:'latest'},(err, a1)=>{
       if (err) {
         throw 'fatal-@74 unable to get article'
       }
 
-      console.log('get-itemx =>data:',data);
-      app.article.set(data); // will be used by preview-panel.
+      console.log('get-itemx =>data:', a1);
+
+      /*
+          fix pic
+      */
+      if (a1.data.transcription && a1.data.pic.includes('missing')) {
+        a1.data.pic = '../transcription-reduced-20200224'
+      }
+
+      app.article.set(a1); // will be used by preview-panel.
       if (false) {
         app.state.set('html',null);
-        app.state.set('meta',data.row.content); // Museum is 100% pure YAML.
+        app.state.set('meta',a1.row.content); // Museum is 100% pure YAML.
       }
       console.log('app.article:',app.article.get()); // to debug.
     }) // Meteor.call

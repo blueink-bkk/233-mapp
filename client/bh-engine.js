@@ -22,15 +22,15 @@ const bh_engine = new Bloodhound({ // only used here in index.
 }); // engine
 
 export async function bh_init(rows) {
-  mk_ts(rows)
+  mk_ts4museum(rows)
   if (!rows[0].ts_vector) throw 'fata;-@14 Missing ts-vector'
   const etime = new Date().getTime();
   const p1 = await bh_engine.initialize()
-  console.log(`bh_engine initialized in ${new Date().getTime() - etime} ms.`)
-  console.log('bh-init p1:',p1)
+  console.log(`@29 bh_engine initialized in ${new Date().getTime() - etime} ms.`)
+  console.log('@30 bh-init p1:',p1)
   bh_engine.add(rows); // not a promise.
-  console.log(`bh_engine - ${rows.length} rows added in ${new Date().getTime() - etime} ms.`)
-  console.log('rows:',rows)
+  console.log(`@32 bh_engine - ${rows.length} rows added in ${new Date().getTime() - etime} ms.`)
+  console.log('@33 rows:',rows)
 };
 
 /*
@@ -82,8 +82,10 @@ const mk_ts1 = function(h){
   return v.join(' ');
 };
 
+
+
 export function mk_ts(rows, cols) {
-  console.log(`mk_ts ${rows.length} rows cols:`,cols);
+  console.log(`@86 mk_ts ${rows.length} rows cols:`,cols);
   cols = cols || ['yp','h1','h2','mk2','fr','en'];
   rows.forEach((row,i)=>{
     let ts = [];
@@ -100,6 +102,30 @@ export function mk_ts(rows, cols) {
     row.ts_vector = mk_ts1(normalize(ts.join(' '))); // also remove accents.
   }); // each row.
 };
+
+
+export function mk_ts4museum(rows, cols) {
+  console.log(`@108 mk_ts ${rows.length} rows cols:`,cols);
+  cols = cols || ['yp','h1','h2','auteurs','mk','fr','en'];
+  rows.forEach((row,i)=>{
+    let raw_text = [];
+    cols.forEach(col => {
+      if (row[col]) {
+        if (Array.isArray(row[col])) {
+          row[col].forEach(it =>{
+            raw_text.push(it); // h2, mk, indexNames, auteurs
+          })
+        } else {
+          raw_text.push(row[col]); // row['yp'], row['h1'], etc...
+        }
+      }
+    });
+
+    row.ts_vector = mk_ts1(normalize(raw_text.join(' '))); // also remove accents.
+  }); // each row.
+};
+
+
 
 // --------------------------------------------------------------------------
 

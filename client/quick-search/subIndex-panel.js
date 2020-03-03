@@ -67,6 +67,13 @@ TP.events({ // could be in article.js !!!!
       }
 
 //      console.log('get-itemx =>data:',data);
+/*
+    fix pic
+*/
+if (data.data.transcription && data.data.pic.includes('missing')) {
+  data.data.pic = '../transcription-reduced-20200224'
+}
+
       app.article.set(data);
       if (false) {
         app.state.set('html',null);

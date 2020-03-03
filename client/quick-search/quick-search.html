@@ -31,9 +31,10 @@
 			{{> date_range_slider this}}
 
 			<input type="text" class="cc-typeahead js-typeahead"
-				placeholder="{{__ 'search-made-on2' catalogsCount.get articlesCount.get }}"
+				placeholder="{{__ 'search-made-on2' catalogsCount.get articlesCount.get}}"
 				onfocus="this.placeholder = ''"
-				onblur="this.placeholder = 'Recherche dans 9999 articles et 9999 documents joints.'"
+				onblur="this.placeholder = {{__ 'search-made-on2'  12 45}}"
+				xxonblur="this.placeholder = {{__ 'search-made-on2' catalogsCount.get articlesCount.get}}"
 			/>
 			<div style="margin:15px 0 0 0;
 					font-size:12pt; font-family:Lato; _font-style:italic;

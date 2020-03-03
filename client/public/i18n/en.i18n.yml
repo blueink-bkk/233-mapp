@@ -1,0 +1,56 @@
+_locale: en
+_namespace: ui
+ping: pong
+argv1: this is argv1. catalogues:{$catalogs} and articles:(${articles})
+ultimheat-museum: Ultimheat Museum
+antique-heating-cooking-appliances: Antique heating and cooking appliances
+manufacturers-catalog: Manufacturers catalogs
+books-articles-periodicals: Books, articles and periodicals on <br>heating techniques and fuels
+quick-search-is-done-by: The search is done by entering at least the first 3 characters of the searched word, then by selecting among the propositions which appear
+search-made-on: Search is made on
+search-made-on2: Search is made on {$0} catalogs and {$1} articles
+search-made-on3: Search is made on %s catalogs, %s documents and %s pages
+deep-search-on-pdf: Search is made on %s pdf-files, total %s pages.
+deep-search-is-done-by: Type in a word or short sentence, then press the "enter" key.<br> Search will be done by full text analysis on pdf content.
+deep-search-engine-initializing: Search engine is initializing - please wait.<br>Expect to wait up to 20 seconds for a slow connection.
+
+over-500: more than
+yp: Publication date
+search-selections: Searching selections
+add: Add
+modify-search-params: Modify search parameters
+h1: Company or author name
+h2: Activity
+brands: Brands
+fr: French
+en: English
+zh: Chinese
+name-author: Foundation name or author
+year-founded: Founded in
+all-columns: All columns
+city: City
+sa: street
+co: Country
+actual-search: Actual search is made on
+general-index: Indexes list
+by-date: Catalogs classified by date
+manufacturers-index: Manufacturers index
+brands-index: Brands index
+entries: entries
+back-to-selection: Back to search results
+documents: documents
+date-published: Published in
+last-updated: Last update
+jan: January
+feb: February
+mar: March
+apr: April
+may: May
+jun: June
+jul: July
+aug: August
+sep: September
+oct: October
+nov: November
+dec: December
+transcription: Transcription

@@ -53,13 +53,32 @@ import './pub-tester/pub-tester.js';
 import './upload/upload.html';
 import './upload/upload.js';
 
+//import './i18n.js'; // create global ver i18n
+//import {i18n_setup} from './i18n-dkz.js';
+//i18n_setup();
+//console.log(`@58 startup getLanguage:`,i18n.getLanguage())
 
-/*
-Meteor.startup(()=>{
-  Meteor.call('get-pub-directory',(err,directory)=>{
-    if (err) throw err;
-    console.log(`get-pub-directory =>`, directory.length);
-      // then store this in localStore.
-  });
+import i18n from 'meteor/universe:i18n';
+import '../i18n/en.i18n.yml';
+import '../i18n/fr.i18n.yml';
+
+Template.registerHelper('session', (key)=>{
+  return Session.get(key)
 })
-*/
+
+
+i18n.onChangeLocale (function(newLocale){
+    console.log(`new-locale:`,newLocale);
+    return;
+    i18n.loadLocale(newLocale)
+    .then(x=>{
+      console.log(`then x:`,x)
+    })
+})
+
+i18n.setOptions({
+  defaultLocale:'fr'
+})
+
+Meteor.startup(()=>{
+});

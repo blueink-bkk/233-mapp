@@ -1,5 +1,7 @@
 const assert = require('assert');
-import i18n from 'meteor/universe:i18n';
+//import i18n from 'meteor/universe:i18n';
+//import '../i18n/en.i18n.yml';
+//import '../i18n/fr.i18n.yml';
 
 FlowRouter.triggers.enter([
   function(context, redirect) {
@@ -7,7 +9,7 @@ FlowRouter.triggers.enter([
 
     const cur_lang = Session.get('cur-lang');
     const lang = context.queryParams.lang
-      || cur_lang || 'fr';
+      || cur_lang || 'en';
 
 
     return; ///////////////////////////////////////////////////////////////

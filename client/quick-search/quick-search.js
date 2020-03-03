@@ -23,6 +23,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import {app} from '../app-client.js';
 
+//import i18n from 'meteor/universe:i18n';
+
 // ============================================================================
 
 TP.onCreated(function(){
@@ -46,13 +48,23 @@ TP.onCreated(function(){
 
     console.log('museum-index etime:%d ms  for %d entries:',
       data._etime, data.rows.length);
-    console.log('data.rows:',data.rows);
+    console.log('@49 data.rows:',data.rows);
 
-    app.index = data.rows;
+    app.index = data.rows; //.sort((a,b)=>{return (a.yp < b.yp)});
     let catCount =0, aCount =0;
     app.index.forEach(row =>{
       if (+row.sec ==3) aCount++; else catCount++;
       if (row.deleted) throw "found a deleted row..."
+      /***
+            transcriptions
+      ***/
+      if (row.transcription) {
+        console.log(`@62 transcription #${row.xid} pic:<${row.pic}>`)
+      }
+      if (row.pic.includes('missing')) {
+        console.log(`@62 transcription #${row.xid} pic:<${row.pic}>`)
+        row.pic = '../transcription-reduced-20200224'
+      }
     })
     console.log(`found ${catCount} catalogs and ${aCount} articles`)
     tp.data.catalogsCount.set(catCount);
@@ -75,6 +87,7 @@ TP.onRendered(function() {
 });
 
 // ================================================================================
+
 
 TP.helpers({
   selected: function(event, suggestion, datasetName) {
@@ -151,6 +164,7 @@ TP.events({
     const results = bh_search(value) // => subIndex - ONLY used here.
     console.log('results.length:',results.length);
     tp.data.subIndex_Count.set(results.length)
+    results.sort((a,b)=>{return (a.yp > b.yp)});
     app.subIndex.set(results);
     if (results.length >0) {
       app.state.set('show-intro',false)
