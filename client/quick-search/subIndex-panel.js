@@ -85,31 +85,3 @@ if (data.data.transcription && data.data.pic.includes('missing')) {
     return false;
   }
 });
-
-/********************************
-TP.events({ // could be in article.js !!!!
-  'click .js-title': (e,tp)=>{
-//    console.log('> search for exact title e:',e);
-    console.log('> search for exact title <%s>:',e.currentTarget.text);
-//    const v = find_article_byTitle(e.currentTarget.text.toLowerCase());
-    const r = Meteor.publibase.index_lookup(e.currentTarget.text.toLowerCase());
-    if (r.err) {
-      console.log('ERROR:',r.err);
-    } else {
-      let ni = r.data.length;
-      console.log('-- found %d items',ni);
-      if (ni > 0) {
-        console.log('-- found item %d',r.data[0].id);
-        console.log('--- r.data[0].headline: ', r.data[0].headline);
-        console.log('--- r.data[0].value: ', r.data[0].value);
-//        FlowRouter.setParams({id: r.data[0].id});
-          FlowRouter.go('cc-article', {id:r.data[0].id});
-      }
-      else {
-        console.log('-- index-lookup NO items found: ', r.err);
-      }
-    }
-    return true;
-  }
-});
-**********************************/

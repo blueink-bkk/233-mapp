@@ -10,8 +10,7 @@ import '../quick-search/date-range-slider.js'
 import '../quick-search/subIndex-panel.html'
 import '../quick-search/subIndex-panel.js'
 
-import '../quick-search/article.html'
-import '../quick-search/article.js'
+import '../quick-search/articles.js'
 
 import '../quick-search/preview-panel.html'
 import '../quick-search/preview-panel.js'

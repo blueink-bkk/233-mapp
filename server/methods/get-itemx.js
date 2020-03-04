@@ -2,8 +2,8 @@ import {db, package_id, _assert } from '../cms-api.js';
 
 Meteor.methods({
   'get-itemx': (cmd)=>{
-    const {item_id} = cmd;
-    _assert(item_id, cmd, 'Missing item_id');
+    const {xid} = cmd;
+    _assert(xid, cmd, 'Missing xid');
     /***
     return db.query (`
       select *
@@ -17,7 +17,7 @@ Meteor.methods({
       from tvec.pagex
       where (path = 'museum.yaml')
       and (xid = $1)
-    ;`, [item_id], {single:true})
+    ;`, [xid], {single:true})
     .then(retv =>{
 //      console.log(`get-itemx =>${retv.length} rows in ${new Date().getTime()-etime} ms.`)
       console.log(`get-itemx => retv:`,retv)

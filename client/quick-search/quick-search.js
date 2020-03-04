@@ -9,8 +9,7 @@ import './date-range-slider.js'
 import './subIndex-panel.html'
 import './subIndex-panel.js'
 
-import './article.html'
-import './article.js'
+import './articles.js'
 
 import './preview-panel.html'
 import './preview-panel.js'
@@ -224,22 +223,5 @@ FlowRouter.route('/quick-search', {
 //        document.auteur = "Museum v9";
 //        app.article_id.set(undefined);
         BlazeLayout.render('quick-search');
-    }
-});
-
-FlowRouter.route('/article/:id', { name: 'cms-article',
-    action: function(params, queryParams){
-        console.log('Router::action for: ', FlowRouter.getRouteName());
-        console.log(' --- params:',params);
-        console.log(' --- query:',queryParams);
-        if (queryParams.a == 'jj') {
-          Session.set('username','jj');
-        }
-        document.title = "Museum v9";
-        if (app.index)
-        app.article_id.set(params.id);
-        app.show_article(params.id);
-//        BlazeLayout.render('quick-search');
-        // render template will get article from DB.
     }
 });
