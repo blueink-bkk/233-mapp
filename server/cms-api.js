@@ -41,6 +41,7 @@ Meteor.startup(() => {
 // ----------------------------------------------------------------------------
 
 async function open_cms(cmd) {
+  console.log(`@44: open_cms `,cmd)
 
   if (!cmd.password) throw 'fatal-@37 Missing password'
   db = await massive(cmd);

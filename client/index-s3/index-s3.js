@@ -1,58 +1,64 @@
 const assert = require('assert')
 import {app, _assert} from '../app-client.js';
 //import {auteurs, auteurs_array} from '../app-client.js';
+import './index-s3.html';
 
 const TP = Template['index-s3'];
 
+const articles = new ReactiveVar([]);
+const index = new ReactiveVar([]);
+const index_status = new ReactiveVar();
 
 TP.onCreated(function(){
-//  console.log(`onCreated index-s3:${Object.keys(publishers).length}`);
-  this.index = new ReactiveVar();
-  const _index = this.index;
-  const tp = this;
-  tp.data_status = new ReactiveVar('receiving')
-
-  Meteor.call('index-s3',(err,data)=>{
-    if (err) throw err;
-    if (data.error) {
-      console.log(`index-s3:`,data);
-      tp.data_status.set('error')
-      return;
-    }
-    tp.data_status.set('reformatting')
-    console.log(`index-s3 receiving ${data.length} rows`)
-    /*
-        Here we receive 1 record for each article-catalog.
-        Inverted index is done on the client.
-        First step, fn2 : file-name cleanup and "transcription".
-        then add the acronyms.
-    */
-
-//    data.forEach(a1 =>{ // article
-//    }) // each article
-
-    console.log(`index-s3 after cleanup ${data.length} rows`)
-    const y = XI(data); // an array with all aternate titles.
-    console.log(`index-s3 after XIs ${y.length} rows`)
-
-    tp.data_status.set('almost-done')
-    _index.set(y)
-    tp.data_status.set('done')
-//    console.log(y)
-  });
 })
 
 TP.onRendered(function(){
-//  console.log(`onRendered index-s3:${Object.keys(publishers).length}`);
+
+    Meteor.call('list-articles', (err, data)=>{
+      if (err) throw err;
+      if (data.error) {
+        console.log(`index-s3:`,data);
+        index_status.set('error')
+        return;
+      }
+
+      const {data:articles, etime} = data;
+      assert(articles)
+      console.log(`index-s3 articles(${articles.length})`)
+
+      index_status.set('reformatting')
+
+      /*
+          Here we receive 1 record for each article-catalog.
+          Inverted index is done on the client.
+          First step, fn2 : file-name cleanup and "transcription".
+          then add the acronyms.
+      */
+
+  //    data.forEach(a1 =>{ // article
+  //    }) // each article
+
+//      console.log(`index-s3 after cleanup ${data.length} rows`)
+
+
+      console.log(`index-s3 before XIs articles(${articles.length})`)
+      const y = XI(articles); // an array with all aternate titles.
+      console.log(`index-s3 after XIs ${y.length} rows`)
+
+      index_status.set('almost-done')
+      index.set(y)
+      index_status.set('done')
+  //    console.log(y)
+    console.log(`index-s3 building page...`)
+    });
 })
 
 TP.helpers({
   index() { // is an array.
-    const tp = Template.instance();
-    return tp.index.get();
+    return index.get();
   },
   data_status() {
-    return Template.instance().data_status.get();
+    return index_status.get();
   }
 });
 
@@ -171,8 +177,8 @@ function XI(articles) {
   let mCount = 0;
 
   for (const j in articles) {
-    const article = articles[j];
-    const {item_id, xid, yp, name, title ='*missing*', links=[], transcription, restricted, inames=[], auteurs=[]} = article;
+    const a1 = articles[j];
+    const {item_id, xid, yp, name, title ='*missing*', links=[], transcription, restricted, indexnames:indexNames, auteurs=[]} = a1;
 
     links.forEach((pdf)=>{
       pdf.fn2 = pdf.fn
@@ -180,6 +186,7 @@ function XI(articles) {
       .replace(/[\s\-]*[0-9]+$/,'');
     })
 
+    /********** validate-fix indexNames
     const indexNames = inames.map(ti=>(ti.trim())).filter(ti=>(ti.length>0)); // FIX.
     if (indexNames.length <1) {
       notice(`j:${j} titre:${JSON.stringify(article)}`);
@@ -188,8 +195,10 @@ function XI(articles) {
       if (false) {
         continue;
       }
-    }
-    _assert(indexNames, article, 'fatal-183. Missing inames')
+    }*/
+
+// console.log(`@196: indexNames:`,indexNames)
+    assert(indexNames, a1, 'fatal-183. Missing indexNames')
     //notice(JSON.stringify(titre.aka));
 
     /*
@@ -205,7 +214,7 @@ function XI(articles) {
       xi.push ({
 //  	    item_id,
         iName,
-        titre_origine: (jj>0)? inames[0] : null,
+        titre_origine: indexNames[0],
         xid,
         yp,
 //        name,

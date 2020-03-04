@@ -1,0 +1,51 @@
+<html>
+<head>
+</head>
+
+<style>
+body {
+  font-family: monospace;
+  background-color: rgb(90,90,90);
+  color:white;
+}
+
+a {
+  text-decoration:none;
+  color: lightgreen;
+}
+
+h1 {
+  color: lightgray;
+  font-weight: bold; font-size:14pt;
+}
+
+.h1{
+  font-weight: bold; font-size:10pt;
+  line-height:14pt;
+  padding: 4px 10px;
+}
+
+</style>
+
+<body>
+
+<div>
+  <h1>Liste Chronologique des Catalogues</h1>
+  If you want access to our Web Application go <a href="/">here</a>
+  <div>{{title}}</div>
+  <br>
+  <div>
+    {{#each it in articles}}
+    <div>
+      <span class="yp">{{it.yp}}</span>
+      <span class="h1"><a href="./page/{{it.item_id}}">{{it.title}}</a></span>
+      {{#each product in it.h2}}
+        <span class="h2">{{product}}</span>
+      {{/each}}
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+</body>
+</html>

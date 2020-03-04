@@ -14,7 +14,7 @@ module.exports = function(req,res) {
           return `part:${x+1} - `;
         }
       },*/
-      _: function(key){return TAPi18n.__(key)}
+      _: function(key){return i18n.__(key)}
     });
     res.status(200)
     .end(html);
@@ -32,7 +32,7 @@ module.exports = function(req,res) {
         return `part:${x+1} - `;
       }
     },*/
-    _: function(key){return TAPi18n.__(key)}
+    _: function(key){return i18n.__(key)}
   });
   res.status(200)
   .end(html);

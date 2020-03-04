@@ -7,7 +7,6 @@ module.exports = function(req,res) {
   const etime = new Date().getTime();
 
   _assert(db,db,'Missing db')
-  _assert(package_id,package_id,'Missing package_id')
 
   const v = req.params.id.match(/^([0-9]+)/);
   if (!v || v.length < 2) {
@@ -15,14 +14,15 @@ module.exports = function(req,res) {
     return;
   }
 
-  const item_id = +v[1];
+  const item_id = v[1];
 
   return db.query(`
     select *
-    from cms_articles__directory
-    where item_id = $1
+    from tvec.pagex
+    where (path <@ 'museum.yaml') and (xid = $1)
     ;`,[item_id],{single:true})
   .then( page =>{
+    console.log(`@25: page `,page)
     const html = SSR.render('page',{
       it:page,
       isTranscription: ()=>{
@@ -33,7 +33,7 @@ module.exports = function(req,res) {
           return `part:${x+1} - `;
         }
       },
-      _: function(key){return TAPi18n.__(key)}
+      _: function(key){return i18n.__(key)}
     });
     console.log(`etime: ${new Date().getTime()-etime}`);
     res.status(200)

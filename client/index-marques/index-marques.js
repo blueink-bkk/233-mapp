@@ -1,81 +1,63 @@
+import './index-marques.html';
 const assert = require('assert')
 
-import {auteurs, app} from '../app-client.js';
+//import {auteurs, app} from '../app-client.js';
 //import {auteurs, auteurs_array} from '../app-client.js';
 const TP = Template['index-marques'];
 
+const articles = new ReactiveVar([]);
+const index = new ReactiveVar([]);
+const index_status = new ReactiveVar();
+
+
 TP.onCreated(function(){
-  console.log(`onCreated index-marques:${Object.keys(auteurs).length}`);
-  this.index = new ReactiveVar();
-  const _index = this.index;
-  this.data.q = new ReactiveVar('wait')
-  const tp = this;
-  tp.data.q.set('please wait...')
-
-  Meteor.call('index-marques',(err,data)=>{
-    tp.data.q.set('reformatting')
-    if (err) throw err;
-    if (data.error) {
-      console.log(`[index-marques] data:`,data);
-      this.data.q.set('error')
-      return;
-    }
-    //console.log(`index-marques data:`,data);throw 'fatal-29'
-    tp.data.q.set('reformatting')
-
-    const y = data.map(({marque, articles:titres})=>{
-      //console.log(`--v[${k}]:`,v);
-//      assert(titres[0].restricted !== undefined)
-      if (!titres || titres.length <1) {
-        titres.push({fn:"TRANSCRIPTIONx"})
-        throw 'stop-24'
-      } else {
-        if (!Array.isArray(titres)) {
-          console.log(titres);
-          throw 'fatal-29 Not an array.'
-        }
-
-        titres.forEach(titre=>{
-          titre.links.forEach((pdf)=>{
-            pdf.fn2 = pdf.fn
-            .replace(/^[0-9\s]*\s*/,'')
-            .replace(/[\s\-]*[0-9]+$/,'');
-          })
-        })
-
-        titres.sort((a,b)=>(a.yp.localeCompare(b.yp)));
-      };
-
-      return {
-        marque,
-        titres
-      };
-    });
-    y.sort((a,b)=>{
-      //console.log(`--${a.auteurName}`)
-      return a.marque.localeCompare(b.marque)
-    });
-
-
-    _index.set(y)
-//    console.log(y)
-    this.data.q.set('done')
-  }) // call
 })
 
 TP.onRendered(function(){
-  console.log(`onRendered auteurs-index:${Object.keys(this.index).length}`);
+
+  Meteor.call('list-articles', async (err, data)=>{
+    if (err) throw err;
+    if (data.error) {
+      console.log(`[index-marques] data:`,data);
+      index_status.set(data.error)
+      return;
+    }
+
+    const {data:articles, etime} = data;
+    console.log(`@27: call(index-marques) => articles(${articles.length})`)
+
+    const {index:mlist} = mk_index_marques(articles)
+
+    const g = reformat(mlist)
+//    const y = await reformat(index)
+    const na = g.next()
+    console.log(`@84: reformat-1 na:`,na.value)
+//    Session.set('wait-message',`got ${retv.index.length} results`)
+    g.next()
+    console.log(`@84: reformat-2`)
+//    Session.set('wait-message',`compiling ${retv.index.length} results`)
+    const {value:y, done} = g.next()
+//    Session.set('wait-message',`sorting ${retv.index.length} results`)
+    console.log(`@84: reformat-3 (done:${done}) y:${y.length}`)
+    index.set(y)
+//    console.log(y)
+//    Session.set('wait-message', null)
+//    this.data.q.set('done')
+  }) // call
+})
+
+TP.helpers({
+  wait_message() {
+//    return Session.get('wait-message')
+  }
 })
 
 TP.helpers({
   marques() { // is an array.
-    const tp = Template.instance();
-    const marques = tp.index.get();
-    console.log(`helper:marques ${marques && marques.length} items`)
-    return marques;
+    return index.get();
   },
   data_status() {
-    return Template.instance().data_status.get();
+    return index_status.get();
   }
 });
 
@@ -184,6 +166,103 @@ TP.events({
   } // input
 
 })
+
+
+function *reformat(index) {
+  yield index.length;
+
+  const y = index.map(({marque, articles:titres})=>{
+    //console.log(`@27: `,marque)
+    if (!titres || titres.length <1) {
+      titres.push({fn:"TRANSCRIPTIONx"})
+      throw 'stop-24'
+    } else {
+      if (!Array.isArray(titres)) {
+        console.log(titres);
+        throw 'fatal-29 Not an array.'
+      }
+
+      titres.forEach(titre=>{
+        titre.links.forEach((pdf)=>{
+          pdf.fn2 = pdf.fn
+          .replace(/^[0-9\s]*\s*/,'')
+          .replace(/[\s\-]*[0-9]+$/,'');
+        })
+      })
+
+      titres.sort((a,b)=>(a.yp.localeCompare(b.yp)));
+    };
+
+    return {
+      marque,
+      titres
+    };
+  });
+
+  yield y;
+
+  console.log(`@44: got ${y.length} entries - sorting...`)
+  Session.set('wait-message',`almost done`)
+  y.sort((a,b)=>{
+    //console.log(`--${a.auteurName}`)
+    return a.marque.localeCompare(b.marque)
+  });
+  console.log(`@44: got ${y.length} entries - done`)
+  return y;
+}
+
+
+function mk_index_marques(articles) { // 1-1 relation with xlsx
+  const marques = {}
+  let mCount = 0;
+  for (const a1 of articles) {
+    const {xid, yp, indexnames:indexNames, mk, links, transcription, restricted} = a1;
+    // each xlsx-entry can generate multiple entry in marques.
+
+    if (!indexNames || !mk) {
+      console.log(`@328 fatal:`,{xe})
+      process.exit(-1)
+    }
+
+//    console.log(`@332 fatal:`,{indexnames})
+
+    const _mk = mk.map(mk1=>(mk1.trim())).filter(mk1=>(mk1.length>0)); // FIX.
+
+    if (!mk || (mk.length<1)) {
+      notice(`j:${j} titre:${JSON.stringify(indexNames)}`);
+      mCount++;
+      notice (`mapp_index_byMarques =>fatal title without marque xid:${xid} ${mCount}/${j}`);
+      continue;
+    }
+  //  notice(titre.sec);
+
+
+    _mk.forEach((mk1)=>{
+      if (mk1.length<1) throw `fatal-65`;
+      if (mk1.trim().length<1) throw `fatal-66`;
+      marques[mk1] = marques[mk1] || [];
+
+      marques[mk1].push({
+        title : indexNames[0],
+  	    xid,
+  	    yp,
+  	    links, // pdf
+  	    transcription,
+  	    restricted
+  	  })
+    });
+  }; // loop.
+
+
+  const mlist = Object.keys(marques).map(mk1 => ({
+      marque: mk1 || '*null*',		// marque === iName
+  //    nc: marques[mk1].length,
+      articles: marques[mk1]	// list of catalogs.
+  }));
+
+  return {index:mlist};
+}
+
 
 
 // ============================================================================

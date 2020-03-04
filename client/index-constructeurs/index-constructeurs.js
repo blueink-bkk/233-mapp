@@ -1,27 +1,36 @@
 const assert = require('assert')
+import './index-constructeurs.html';
+
 import {constructeurs, app} from '../app-client.js';
 //import {auteurs, auteurs_array} from '../app-client.js';
 const TP = Template['index-constructeurs'];
 
-
+const index = new ReactiveVar([]);
+const status = new ReactiveVar('initial-state');
+const index_status = new ReactiveVar('initial-state');
 
 TP.onCreated(function(){
-  console.log(`onCreated index-constructeurs:${Object.keys(constructeurs).length}`);
-  this.index = new ReactiveVar();
-  const _index = this.index;
-  const tp = this;
-  tp.data_status = new ReactiveVar('receiving data...')
+})
 
-  Meteor.call('index-constructeurs',(err,data)=>{
+TP.onRendered(function(){
+
+  index_status.set('calling index-constructeurs')
+
+  // we should get both : list articles and index-constructeurs
+
+  Meteor.call('list-articles',(err, retv)=>{
     if (err) throw err;
-    if (data.error) {
-      console.log(`ALERT index-constructeurs:`,data);
-      tp.data_status.set('error')
+    if (retv.error) {
+      console.log(`ALERT index-constructeurs:`,retv);
+      index_status.set(retv.error)
       return;
     }
-    tp.data_status.set('reformatting')
-//    console.log(`index-constructeurs receiving data:`,data)
-    console.log(`index-constructeurs receiving ${data.length} rows`)
+
+    const {data:articles,etime} = retv;
+    assert(articles)
+    index_status.set('reformatting')
+//    console.log(`index-constructeurs receiving index:`,index)
+    console.log(`index-constructeurs articles (${articles.length})`)
     /*
         Here we receive 1 record for each article-catalog.
         Inverted index is done on the client.
@@ -29,13 +38,14 @@ TP.onCreated(function(){
         then add the acronyms.
     */
 
-    data.forEach((a1,j) =>{ // Catalogs ( from Construteurs)
-      _assert(a1.indexNames, a1, 'fatal-28. Missing indexNames.')
-      a1.indexNames = a1.indexNames.map(ti=>(ti.trim())).filter(ti=>(ti.length>0)); // FIX.
+    // some pre-processing...
+    articles.forEach((a1,j) =>{ // Catalogs ( from Construteurs)
+      if (!a1.indexnames) {fatal$42(a1, 'missing indexNames');}
+//      a1.indexNames = a1.indexNames.map(ti=>(ti.trim())).filter(ti=>(ti.length>0)); // FIX.
       if (!a1.links || a1.links.length<1) {
 //        a1.links.push({fn2:"TRANSCRIPTION"})
       } else {
-        tp.data_status.set(`reformatting ${j}`); // does nothing.!!!
+        // tp.data_status.set(`reformatting ${j}`); // does nothing.!!!
         a1.links.forEach((pdf)=>{
           pdf.fn2 = pdf.fn
           .replace(/^[0-9\s]*\s*/,'') // remove 'ca' !!!!
@@ -44,24 +54,26 @@ TP.onCreated(function(){
       }
     }) // each cc.
 
-    const xi = XI(data); // list (Array) of constructeurs, with catalogs.
-    _index.set(xi)
+    const xi = XI(articles); // list (Array) of constructeurs, with catalogs.
+    index.set(xi)
 //    console.log(xi)
-    tp.data_status.set('done')
+    index_status.set('ready')
   });
 })
 
-TP.onRendered(function(){
-  console.log(`onRendered index-constructeurs:${Object.keys(constructeurs).length}`);
-})
+function fatal$42(a1, msg) {
+  console.log(`\n>>>>>>>fatal$42 : `,msg)
+  console.log(a1)
+  throw msg
+}
+
 
 TP.helpers({
   constructeurs() { // is an array.
-    const tp = Template.instance();
-    return tp.index.get();
+    return index.get();
   },
-  data_status() {
-    return Template.instance().data_status.get();
+  index_status() {
+    return index_status.get();
   }
 
 });
@@ -187,7 +199,7 @@ function XI(articles) {
 
   for (const j in articles) {
     const article = articles[j];
-    const {item_id, xid, yp, name, title, links, transcription, restricted, indexNames} = article;
+    const {item_id, xid, yp, name, title, links, transcription, restricted, indexnames:indexNames} = article;
 
     _assert((indexNames && indexNames.length>0), article, 'fatal-195. missing indexNames');
 

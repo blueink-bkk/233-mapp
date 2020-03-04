@@ -1,26 +1,35 @@
 const assert = require('assert')
+import './index-auteurs.html';
 
 import {auteurs, app} from '../app-client.js';
+import mk_index_auteurs from '/shared/index-des-auteurs.js';
+
 //import {auteurs, auteurs_array} from '../app-client.js';
 const TP = Template['index-auteurs'];
 
+const articles = new ReactiveVar([]);
+const index = new ReactiveVar([]);
+const index_status = new ReactiveVar();
+
 
 TP.onCreated(function(){
-  console.log(`onCreated pdf-by-auteurs:${Object.keys(auteurs).length}`);
-  this.index = new ReactiveVar();
-  const _index = this.index;
+})
 
-  Meteor.call('index-auteurs',(err,data)=>{
+TP.onRendered(function(){
+
+  Meteor.call('list-catalogs', (err, data)=>{
     if (err) throw err;
     if (data.error) {
-      console.log(`index-auteurs:`,data);
+      console.log(`index-auteurs:`, data);
       return;
     }
 
-  //console.log('data:',data)
-    //console.log(`index-auteurs:`, data.auteurs);throw 'fatal-29'
+    const {data:articles} = data;
 
-    const y = data.map(({name:auteurName, articles:titres})=>{
+    const {index:alist} = mk_index_auteurs(articles);
+
+
+    const y = alist.map(({auteur:auteurName, articles:titres})=>{
       //console.log(`--v[${k}]:`,v);
 //      assert(titres[0].restricted !== undefined)
       if (!titres || titres.length <1) {
@@ -55,18 +64,14 @@ TP.onCreated(function(){
     });
 
 
-    _index.set(y)
+    index.set(y)
   }) // call
-})
 
-TP.onRendered(function(){
-  console.log(`onRendered auteurs-index:${Object.keys(auteurs).length}`);
 })
 
 TP.helpers({
   auteurs() { // is an array.
-    const tp = Template.instance();
-    return tp.index.get();
+    return index.get();
   }
 });
 
@@ -175,6 +180,7 @@ TP.events({
   } // input
 
 })
+
 
 
 // ============================================================================

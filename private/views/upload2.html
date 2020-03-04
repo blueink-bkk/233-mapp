@@ -1,0 +1,17 @@
+{{{doctype}}}
+<html>
+  <body>
+    <h1>Upload files</h1>
+    <div style="margin:20pt;">
+      select the folder you want to sync with the server.
+    </div>
+    <form ref='uploadForm'
+      id='uploadForm'
+      action='http://localhost:8000/upload2'
+      method='post'
+      encType="multipart/form-data">
+        <input type="file" name="sampleFile" webkitdirectory directory multiple/>
+        <input type='submit' value='Upload!' />
+    </form>
+  </body>
+</html>

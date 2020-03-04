@@ -26,24 +26,20 @@ import './deep-search/deep-search.js';
 /*************************************
 
 
-import './index-auteurs/index-auteurs.html';
-import './index-auteurs/index-auteurs.js';
-
-import './auteurs/auteurs-directory.html';
-import './auteurs/auteurs-directory.js';
-
-import './index-constructeurs/index-constructeurs.html';
-import './index-constructeurs/index-constructeurs.js';
-
-import './index-marques/index-marques.html';
-import './index-marques/index-marques.js';
-
 import './index-titres/index-titres.html';
 import './index-titres/index-titres.js';
 
-import './index-s3/index-s3.html';
-import './index-s3/index-s3.js';
 *****************/
+
+
+import './index-s3/index-s3.js';
+
+
+import './index-marques/index-marques.js';
+
+import './index-auteurs/index-auteurs.js';
+
+import './index-constructeurs/index-constructeurs.js';
 
 /*
 import './pub-tester/pub-tester.html';
@@ -77,7 +73,8 @@ i18n.onChangeLocale (function(newLocale){
 })
 
 i18n.setOptions({
-  defaultLocale:'fr'
+  defaultLocale:'fr',
+  purify: (s)=>s
 })
 
 Meteor.startup(()=>{

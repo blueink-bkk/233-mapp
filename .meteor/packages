@@ -27,3 +27,4 @@ session@1.2.0
 manuel:reactivearray
 universe:i18n
 abatros:i18n-blaze
+meteorhacks:ssr

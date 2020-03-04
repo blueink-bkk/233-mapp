@@ -1,11 +1,21 @@
 import {db, package_id, _assert } from '../cms-api.js';
 
 Meteor.methods({
-  'index-marques': ()=>{
-    _assert(package_id,package_id,'fatal Missing package_id')
+  'index-marques': async ()=>{
     _assert(db,db,'fatal Missing db')
 
-    return db.query(`
+    const retv = await require('../lib/index-des-marques.js')({db});
+    //console.log(retv)
+    const {index,etime} = retv;
+    console.log(`@10 list.length:${index.length}`)
+    index.forEach(p=>{
+//      console.log(p)
+    })
+
+    return {index,etime}
+
+
+    /* return db.query(`
       select * from mapp.index_marques($1::jsonb);
       `,[{package_id}],{single:false})
     .then(retv =>{
@@ -18,6 +28,7 @@ Meteor.methods({
       return {
         error:err.message
       }
-    })
+    })*/
+
   }
 })

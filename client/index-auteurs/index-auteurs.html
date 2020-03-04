@@ -20,7 +20,7 @@
 </head>
 
 <template name="index-auteurs">
-<div id="index-auteurs">
+<div id="index-auteurs" style="margin-left:20px;">
 
   {{!--
   <div style="border:0px solid black; margin:5px; padding:2px;">
@@ -44,9 +44,11 @@
   --}}
 
 
-
+  <h4>Index des Auteurs</h4>
   <div style="border:0px solid black; margin:5px; padding:2px;">
-    <input type="text" id="find-auteurs-input" style="height:20px; width:100%;">
+    {{!--
+      <input type="text" id="find-auteurs-input" style="height:20px; width:100%;">
+    --}}
   </div>
   {{#each au in auteurs}}
   <div>
@@ -58,7 +60,8 @@
         {{#each title in au.titres}}
           <div style="margin:4px 0 0 0px;">
             <b>Titre du (des) document(s) :</b><br>
-            <span class="yp">({{title.yp}})</span> &ndash; {{title.title}}
+            <span class="yp">({{title.yp}})</span> &ndash;
+            <a href="/page/{{title.xid}}">{{title.title}}</a>
 
             <span style="font-size:9pt;">[{{title.xid}}]
               {{#if title.restricted}}
