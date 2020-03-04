@@ -1,0 +1,186 @@
+<head>
+  <style>
+    .red {color:red;}
+    .green {color:green;}
+    #index-auteurs {
+       font-family:times;
+    }
+
+    #index-auteurs b {
+       font-family:times;
+       color: rgb(100,100,100)
+    }
+
+    #index-auteurs span.yp {
+      font-family: helvetica;
+      font-size:10pt;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<template name="pagex">
+<div id="pagex" style="margin-left:20px;">
+
+
+  <article class="af3" style="_border: 1px dashed gray;">
+
+    {{> xarticle_header}}
+    <hr>
+
+    <section class="data">
+      <!--
+      <div class="slidep left">
+        <a href="#" class="l-arrow js-prev-article">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+      </div>
+      -->
+      <div>
+        <div class="img">
+          {{#if it.pic}}
+          <img src="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{it.pic}}.jpg"
+            style="max-height:500px;">
+          {{/if}}
+        </div>
+
+          <h1 class="company inb">
+            {{it.h1}}
+          </h1>
+
+          {{#if it.h2}}
+          <h3 class="soc2">
+          {{it.h2}}
+          </h3>
+          {{/if}}
+
+          <h3 class="country fr">
+          </h3>
+
+          {{#if it.yp}}
+          <h3 class="year inb">
+            <label>{{__ 'yp'}} : </label>
+            {{it.yp}}
+            {{#if it.circa}}
+            circa
+            {{/if}}
+          </h3>
+          {{/if}}
+
+          {{#if it.ci}}
+          <h3 class="city">
+          <span class="olabel">{{__ 'city'}} :</span>
+          <span style="font-family: FontAwesome;">&#xf0ac;&nbsp;</span>
+            {{it.ci}}
+          </h3>
+          {{/if}}
+
+          {{#if it.sa}}
+          <h3 class="address">
+            {{it.sa}}
+          </h3>
+          {{/if}}
+
+          <h3 style="margin-top:5pt;">
+            {{#if it.aka}}
+              <span class="narrow">{{__ 'name-author'}}</span> : {{it.aka}}
+              {{#if it.yf}}
+                &emsp;<span class="narrow">{{__ 'year-founded'}} : </span>
+                {{it.yf}}
+              {{/if}}
+            {{else}}
+            {{#if it.yf}}
+              <span class="narrow">{{__ 'year-founded'}} : </span> {{it.yf}}
+            {{/if}}
+            {{/if}}
+          </h3>
+
+          {{#if it.mk}}
+          <div class="brands">
+            <i class="fa fa-tag btag"></i>
+            <span class="olabel">{{__ 'brands'}} :</span>
+            {{#each b in it.mk}}
+              <span class="mtag">&ndash;&nbsp;<a href="#">{{b}}</a></span>
+            {{/each}}
+
+          </div>
+          {{/if}}
+
+
+          <div>
+
+          </div>
+      </div>
+
+      <!--
+      <div class="slidep right">
+        <a href="#" class="r-arrow js-next-article">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    -->
+    </section>
+
+
+    {{#if isTranscription}}
+    <i>{{__ 'transcription'}}</i>
+    {{/if}}
+
+    {{#if it.fr}}
+    <hr>
+    <p class="fr">{{it.fr}}</p>
+    {{/if}}
+
+    {{#if it.en}}
+    <hr>
+    <p class="en">{{it.en}}</p>
+    {{/if}}
+
+    {{#if it.zh}}
+    <hr>
+    <p class="cn">{{it.zh}}</p>
+    {{/if}}
+
+    {{#if it.links}}
+    <hr>
+    {{#each pdf in it.links}}
+    <div class="pdf inb">
+      <img class="pdf-logo1" src="http://www.ultimheat.com/pdf_logo.jpg">
+      {{#if it.reserved}}
+      <a href="#" target='_blank'>
+        PDF <span class="pdf-data" style="font-weight:300;">{{pdf.com}} page(s) (Non communicable)</span>
+      </a>
+      {{else}}
+      <a href="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{pdf.fn}}.pdf" target='_blank'>
+        PDF <span class="pdf-data" style="font-weight:300;">{{part @index}}{{pdf.com}} page(s)</span>
+      </a>
+      {{/if}}
+    </div>
+    &emsp;
+    {{/each}}
+    {{/if}}
+    <hr>
+
+    {{!--
+    <div>
+      {{raw_data}}
+    </div>
+    --}}
+
+    </article>
+
+
+</div>
+</template>
+
+
+<template name="xarticle_header">
+  <h1 class="qc" style="  font-family: 'Oswald';
+    font-weight: 600;
+">
+    Ultimheat.com &mdash; Musée du Chauffage
+  </h1>
+  <div class="qc" style="margin:15px 0;">
+    <i>Visitez notre WebApp</i> <b>&rarr;</b> <a class="click-ici" href="http://museum.ultimheat.com">cliquer ici</a>
+  </div>
+</template>
