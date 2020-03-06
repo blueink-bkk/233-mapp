@@ -1,7 +1,7 @@
 const assert = require('assert')
-import './pagex.html';
+import './xid.html';
 
-const TP = Template.pagex;
+const TP = Template.xid;
 
 const article = new ReactiveVar();
 const index_status = new ReactiveVar();
@@ -156,13 +156,13 @@ TP.events({
 
 // ============================================================================
 
-FlowRouter.route('/pagex/:xid', {
+FlowRouter.route('/xid/:xid', {
   name: 'article',
     action: function(params, queryParams){
         console.log('Router::action for: ', FlowRouter.getRouteName());
         console.log(' --- params:',params);
 //        document.auteur = "Museum v9";
 //        app.article_id.set(undefined);
-        BlazeLayout.render('pagex', params);
+        BlazeLayout.render('xid', params);
     }
 });

@@ -28,8 +28,9 @@
         <b>Cité dans le(s) document(s) suivant(s)</b>
         {{#each title in it.titres}}
           <div style="margin:4px 0 0 0px;">
-            <span class="yp">({{title.yp}})</span> {{title.title}}
-            <span style="font-size:9pt;">[{{title.xid}}]
+            <span class="yp">({{title.yp}})</span>
+            <a href="/xid/{{title.xid}}" target="_blank">{{title.title}}</a>
+            <span style="font-size:9pt;">
               {{#if title.restricted}}
               <span class="red">Restricted</span>{{/if}}
               {{#if title.transcription}}

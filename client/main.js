@@ -36,7 +36,7 @@ import './index-s3/index-s3.js';
 import './index-marques/index-marques.js';
 import './index-auteurs/index-auteurs.js';
 import './index-constructeurs/index-constructeurs.js';
-import './pagex/pagex.js';
+import './xid/xid.js';
 
 /*
 import './pub-tester/pub-tester.html';
