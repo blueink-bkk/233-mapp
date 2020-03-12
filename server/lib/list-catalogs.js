@@ -21,8 +21,8 @@ module.exports = async function list_catalogs(o) {
        data->'mk' as mk,
        data->'auteurs' as auteurs,
        (data->>'sec')::integer as sec
-    from tvec.pages, tvec.files
-    where (file_id = id) and (path <@ 'museum.yaml')
+    from adoc.page, adoc.file
+    where (file_id = id) and (path <@ 'museum.md')
     and ((data->>'sec')::integer > 2)
     and (data->>'mk' is not null)
     order by data->>'yp'

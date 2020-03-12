@@ -2,6 +2,7 @@ import {db, package_id, _assert } from '../cms-api.js';
 
 Meteor.methods({
   'museum-index': ()=>{
+    console.log(`@5: museum-index`)
     const etime = new Date().getTime()
     /*
     return db.query (`
@@ -20,14 +21,14 @@ Meteor.methods({
         data->>'yc' as yc,
         data->'indexNames' as indexNames,
         data->>'flag' as flag
-      from tvec.pages, tvec.files
+      from adoc.page, adoc.file
       where (file_id = id)
-      and (path <@ 'museum.yaml'::ltree)
+      and (path <@ 'museum.md'::ltree)
 --      order by yp, h1;
       order by xid
     `, {package_id})*/
     return db.query(`
-      select xid, filename, lang,
+      select xid, lang,
       data->'auteurs' as auteurs,
       data->'co' as co,
       data->'en' as en,
@@ -40,15 +41,15 @@ Meteor.methods({
       data->'sec' as sec,
       data->'yp' as yp,
       data->'mk' as mk
-      from tvec.pagex
-      where (path = 'museum.yaml')
+      from adoc.pagex
+      where (path <@ 'museum.md')
       and ((data->>'deleted')::boolean is not true)
       order by xid
       limit 65000;
       `)
     .then(data =>{
       const _etime = new Date().getTime() - etime;
-      console.log(`tvec.pagex => ${data.length} in ${_etime} ms.`)
+      console.log(`@52: museum-index adoc.pagex => ${data.length} in ${_etime} ms.`)
       return Promise.resolve({
         _etime: _etime,
         rows: data

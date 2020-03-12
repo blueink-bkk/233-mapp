@@ -127,7 +127,7 @@
 
 				<div style="border-bottom:1px solid darkgray; padding:5px;margin:5px;">
 					<img style="width:100%"
-					src="http://museum-assets.ultimheat.com/museum-pub/{{get_a_pub}}"
+					src="https://museum.us-east-1.linodeobjects.com/museum-pub/{{get_a_pub}}"
 					>
 				</div>
 
@@ -145,13 +145,12 @@
 				{{/if}}
 				<div style="border-bottom:1px solid darkgray; padding-bottom:5px;margin:5px;">
 				<h3>
-					<a style="display:none" href="/pdf/?id={{it.url}}&page={{it.pageno}}">{{trimfn it.url}} (p. {{it.pageno}}) ::{{it.rank}}</a>
-					<a href='http://museum-assets.ultimheat.com/pdf-www/{{it.url}}#page={{it.pageno}}&view=FitH,top'
-						target="anotherTab"
+					<a style="display:none" href="/pdf/?id={{it.url}}&page={{it.pageno}}">{{it.xid}} (p. {{it.pageno}}) ::{{it.rank}}</a>
+					<a href='https://museum.us-east-1.linodeobjects.com/{{it.xid}}#page={{it.pageno}}&view=FitH,top' target="anotherTab"
 						title="Article"
-					>[{{it.rank}}] {{trimfn it.url}}</a>
+					>[{{it.rank}}] {{trimfn it.xid}}</a>
 					<span class="pdf-page">
-					<a href='http://museum-assets.ultimheat.com/pdf-www/{{it.url}}#page={{it.pageno}}&view=FitH,top'
+					<a href='https://museum.us-east-1.linodeobjects.com/{{it.xid}}#page={{it.pageno}}&view=FitH,top'
 						target="anotherTab"
 						title='PDF-FILE-{{it.article_id}}'
 					> #{{it.pageno}}</a>

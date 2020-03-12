@@ -23,8 +23,8 @@ async function mk_index(o) {
        data->>'xid' as xid,
 --         data->'mk' as mk,
        (data->>'sec')::integer as sec
-    from tvec.pages, tvec.files
-    where (file_id = id) and (path <@ 'museum.yaml')
+    from adoc.page, adoc.file
+    where (file_id = id) and (path <@ 'museum.md')
     and ((data->>'sec')::integer <3)
     order by data->>'xid'
 --      limit 5

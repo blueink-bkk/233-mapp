@@ -14,8 +14,8 @@ Meteor.methods({
 
     return db.query (`
       select *
-      from tvec.pagex
-      where (path = 'museum.yaml')
+      from adoc.pagex
+      where (path <@ 'museum.md')
       and (xid = $1)
     ;`, [xid], {single:true})
     .then(retv =>{

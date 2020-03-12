@@ -118,7 +118,7 @@ TP.events({
     console.log(`current-article: ${app.state.get('article-id')} next is item_id:${item_id}`)
     app.state.set('article-id', item_id);
 
-    Meteor.call('get-itemx',{item_id, opCode:'latest'},(err, a1)=>{
+    Meteor.call('get-itemx',{xid:item_id, opCode:'latest'},(err, a1)=>{
       if (err) {
         throw 'fatal-@74 unable to get article'
       }
@@ -152,7 +152,7 @@ TP.events({
 
     app.state.set('article-id', item_id);
 
-    Meteor.call('get-itemx',{item_id, opCode:'latest'}, (err,data)=>{
+    Meteor.call('get-itemx',{xid:item_id, opCode:'latest'}, (err,data)=>{
       if (err) {
         throw 'fatal-@74 unable to get article err: '+err;
       }

@@ -3,11 +3,11 @@ import {db, package_id, _assert } from '../cms-api.js';
 
 Meteor.methods({
   'pdf-pages-count': async ()=>{
+
     const retv1 = await db.query(`
       select count(*)
-      from tvec.pages
-      join tvec.files on (id = file_id)
-      where path = $1
+      from adoc.pagex
+      where path <@ $1
     ;`, ['museum.pdf'], {single:true});
 
 //    console.log(`found ${retv1.count} pages retv1:`,retv1)
@@ -15,8 +15,8 @@ Meteor.methods({
 
     const retv2 = await db.query(`
       select count(*)
-      from tvec.files
-      where path = $1;
+      from adoc.file
+      where path <@ $1;
     ;`, ['museum.pdf'], {single:true});
 //    console.log(`found ${retv2.count} pdf/files retv2:`,retv2)
 

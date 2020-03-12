@@ -87,3 +87,9 @@ exports = {
   _assert
 }
 */
+
+
+export async function search_pages_rank_cd2() {
+//  return await db.tvec.search_pages_rank_cd2(vpath,query)
+  return await db.adoc.search_pages_rank_cd2(vpath,query)
+}

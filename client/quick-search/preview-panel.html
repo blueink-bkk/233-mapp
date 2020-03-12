@@ -25,7 +25,7 @@
       <div>
         <div class="img">
           {{#if it.data.pic}}
-          <img src="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{it.data.pic}}.jpg"
+          <img src="https://museum.us-east-1.linodeobjects.com/{{it.data.pic}}.jpg"
             style="max-height:500px;">
           {{/if}}
         </div>
@@ -131,13 +131,13 @@
     <hr>
     {{#each pdf in it.data.links}}
     <div class="pdf inb">
-      <img class="pdf-logo1" src="http://www.ultimheat.com/pdf_logo.jpg">
+      <img class="pdf-logo1" src="https://museum.us-east-1.linodeobjects.com/pdf_logo.jpg">
       {{#if it.reserved}}
       <a href="#" target='_blank'>
         PDF <span class="pdf-data" style="font-weight:300;">{{pdf.com}} page(s) (Non communicable)</span>
       </a>
       {{else}}
-      <a href="http://museum-assets-v3.ultimheat.com/article/{{it.xid}}/{{pdf.fn}}.pdf" target='_blank'>
+        <a href="https://museum.us-east-1.linodeobjects.com/{{pdf.fn}}.pdf" target='_blank'>
         PDF <span class="pdf-data" style="font-weight:300;">{{part @index}}{{pdf.com}} page(s)</span>
       </a>
       {{/if}}

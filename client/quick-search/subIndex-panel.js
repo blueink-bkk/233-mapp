@@ -61,7 +61,7 @@ TP.events({ // could be in article.js !!!!
     app.state.set('article-id', item_id); // to create the panel.
     update_subIndex_cursor(); // initialize the cursor, before displaying the article/preview.
     //  get_itemx(ai);
-    Meteor.call('get-itemx',{item_id, opCode:'latest'},(err,data)=>{
+    Meteor.call('get-itemx',{xid:item_id, opCode:'latest'},(err,data)=>{
       if (err) {
         throw 'fatal-@74 unable to get article'
       }

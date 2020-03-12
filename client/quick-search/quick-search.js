@@ -47,7 +47,7 @@ TP.onCreated(function(){
 
     console.log('museum-index etime:%d ms  for %d entries:',
       data._etime, data.rows.length);
-    console.log('@49 data.rows:',data.rows);
+    console.log('data.rows:',data.rows);
 
     app.index = data.rows; //.sort((a,b)=>{return (a.yp < b.yp)});
     let catCount =0, aCount =0;
@@ -58,10 +58,10 @@ TP.onCreated(function(){
             transcriptions
       ***/
       if (row.transcription) {
-        console.log(`@62 transcription #${row.xid} pic:<${row.pic}>`)
+        console.log(`transcription #${row.xid} pic:<${row.pic}>`)
       }
       if (row.pic.includes('missing')) {
-        console.log(`@62 transcription #${row.xid} pic:<${row.pic}>`)
+        console.log(`transcription #${row.xid} pic:<${row.pic}>`)
         row.pic = '../transcription-reduced-20200224'
       }
     })

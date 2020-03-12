@@ -18,8 +18,8 @@ module.exports = function(req,res) {
 
   return db.query(`
     select *
-    from tvec.pagex
-    where (path <@ 'museum.yaml') and (xid = $1)
+    from adoc.pagex
+    where (path <@ 'museum.md') and (xid = $1)
     ;`,[item_id],{single:true})
   .then( page =>{
     console.log(`@25: page `,page)

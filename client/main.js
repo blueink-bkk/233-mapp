@@ -25,7 +25,6 @@ import './deep-search/deep-search.js';
 
 /*************************************
 
-
 import './index-titres/index-titres.html';
 import './index-titres/index-titres.js';
 

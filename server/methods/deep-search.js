@@ -4,6 +4,7 @@ const nspell = require('../nspell-vdico.js')
 import {db, package_id, _assert } from '../cms-api.js';
 
 
+
 async function search_v1(cmd) {
   const verbose =1;
   console.log(`deep-search@7 `,{cmd})
@@ -17,7 +18,8 @@ async function search_v1(cmd) {
     // check if there is logical operators in the query, if so execute.
   if (query.match(/[<>\&\|]/)) {
     let etime = new Date().getTime();
-    const data = await db.tvec.search_pages_rank_cd2(vpath,query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,query)
     etime = new Date().getTime() - etime;
     console.log(`q1:(${etime} ms.) ${data.length} results for: ${query}`)
     audit.push(`q1: (${etime} ms.) ${data.length} results for: ${query}`)
@@ -32,7 +34,8 @@ async function search_v1(cmd) {
     const _query = vq.join('<->');
     let etime = new Date().getTime();
     (verbose>0) && console.log(`@32 alternate query:${_query}`)
-    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,_query)
     etime = new Date().getTime() - etime;
     console.log(`q20:(${etime} ms.) ${data.length} results for: ${_query}`)
     audit.push(`q20: (${etime} ms.) ${data.length} results for: ${_query}`)
@@ -49,7 +52,8 @@ async function search_v1(cmd) {
     }).join('<->')
     let etime = new Date().getTime();
     (verbose>0) && console.log(`@49 alternate query:${_query}`)
-    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,_query)
     etime = new Date().getTime() - etime;
     console.log(`q21:(${etime} ms.) ${data.length} results for: ${_query}`)
     audit.push(`q21: (${etime} ms.) ${data.length} results for: ${_query}`)
@@ -68,7 +72,8 @@ async function search_v1(cmd) {
     }).join('<->')
     let etime = new Date().getTime();
     (verbose>0) && console.log(`@68 alternate query:${_query}`)
-    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,_query)
     etime = new Date().getTime() - etime;
     console.log(`q22:(${etime} ms.) ${data.length} results for: ${_query}`)
     audit.push(`q22: (${etime} ms.) ${data.length} results for: ${_query}`)
@@ -84,7 +89,8 @@ async function search_v1(cmd) {
     const _query = vq3.join(' & ');
     let etime = new Date().getTime();
     (verbose>0) && console.log(`@84 alternate query:${_query}`)
-    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,_query)
     etime = new Date().getTime() - etime;
     console.log(`q30:(${etime} ms.) ${data.length} results for: ${_query}`)
     audit.push(`q30: (${etime} ms.) ${data.length} results for: ${_query}`)
@@ -97,7 +103,8 @@ async function search_v1(cmd) {
     const _query = vq3.join(' | ');
     let etime = new Date().getTime();
     (verbose>0) && console.log(`@97 alternate query:${_query}`)
-    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+//    const data = await db.tvec.search_pages_rank_cd2(vpath,_query)
+    const data = await db.adoc.search_pages_rank_cd2(vpath,_query)
     etime = new Date().getTime() - etime;
     console.log(`q40:(${etime} ms.) ${data.length} results for: ${_query}`)
     audit.push(`q40: (${etime} ms.) ${data.length} results for: ${_query}`)
