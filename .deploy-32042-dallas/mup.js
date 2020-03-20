@@ -9,7 +9,7 @@ module.exports = {
 
   app: {
     // TODO: change app name and path
-    name: '233-map',
+    name: '233-mapp',
     path: '/home/dkz/2020/233-mapp',
 
     volumes: {
