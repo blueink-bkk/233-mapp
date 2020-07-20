@@ -28,3 +28,4 @@ manuel:reactivearray
 universe:i18n
 abatros:i18n-blaze
 meteorhacks:ssr
+arillo:flow-router-helpers

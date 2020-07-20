@@ -1,26 +1,26 @@
 <template name="sitemap_short">
   <div>
-    <h3>Sitemap:</h3>
+    <h3>Sitemap (short):</h3>
     <div>
       <a href="/">Welcome page</a>
     </div>
     <div>
-      <a href="/quick-search">quick-search</a>
+      <a href={{pathFor 'quick-search'}}>quick-search</a>
     </div>
     <div>
-      <a href="/deep-search">deep-search</a>
+      <a href={{pathFor 'deep-search'}}>deep-search</a>
     </div>
     <div>
-      <a href="/index-auteurs">index-auteurs</a>
+      <a href={{pathFor 'index-auteurs'}}>index-auteurs</a>
     </div>
     <div>
-      <a href="/index-constructeurs">index-constructeurs</a>
+      <a href={{pathFor 'index-constructeurs'}}>index-constructeurs</a>
     </div>
     <div>
-      <a href="/index-marques">index-marques</a>
+      <a href={{pathFor 'index-marques'}}>index-marques</a>
     </div>
     <div>
-      <a href="/index-s3">index-titres (S3)</a>
+      <a href={{pathFor 'index-s3'}}>index-titres (S3)</a>
     </div>
   </div>
 </template>
